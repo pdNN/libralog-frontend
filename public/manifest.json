@@ -1,0 +1,30 @@
+{
+  "name": "LibraLog",
+  "short_name": "LibraLog",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1C7BB2",
+  "background_color": "#fafbfd",
+  "icons": [
+    {
+      "src": "/favicon/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon/favicon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon/favicon-196x196.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
