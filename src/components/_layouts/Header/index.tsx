@@ -4,6 +4,7 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { Logout as LogoutIcon, Menu as MenuIcon } from "@mui/icons-material";
 import Logo from "assets/libra-logo-220.png";
 import { useAuth } from "hooks/auth";
+import { useHistory } from "react-router";
 
 interface IHeader {
   open: boolean;
@@ -12,6 +13,8 @@ interface IHeader {
 
 const Header: FC<IHeader> = ({ open, handleSidebarOpen }) => {
   const { signOut, usuario } = useAuth();
+
+  const history = useHistory();
 
   return (
     <StyledAppBar position="fixed" open={open}>
@@ -45,6 +48,7 @@ const Header: FC<IHeader> = ({ open, handleSidebarOpen }) => {
           <IconButton
             onClick={() => {
               signOut();
+              history.push("/login");
             }}
             sx={{ color: "#fff" }}
           >

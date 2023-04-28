@@ -181,6 +181,7 @@ const CRUDDistribuidorasInterno: FC = () => {
                   label="Nome"
                   variant="filled"
                   fullWidth
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -191,6 +192,7 @@ const CRUDDistribuidorasInterno: FC = () => {
                   type="number"
                   variant="filled"
                   fullWidth
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem

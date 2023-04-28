@@ -123,6 +123,9 @@ const CRUDUsuariosInterno: FC = () => {
         await api
           .post(`/usuarios`, data)
           .then(async (res: AxiosResponse) => {
+            toast.success(
+              `Usuário #${res.data.cod_usuario} criado com sucesso`,
+            );
             history.push(`/cadastros/usuarios/${res.data.cod_usuario}`);
           })
           .catch((err: any) => {
@@ -208,6 +211,7 @@ const CRUDUsuariosInterno: FC = () => {
                   label="Nome"
                   variant="filled"
                   fullWidth
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -218,6 +222,7 @@ const CRUDUsuariosInterno: FC = () => {
                   type="email"
                   variant="filled"
                   fullWidth
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -228,6 +233,7 @@ const CRUDUsuariosInterno: FC = () => {
                   type="password"
                   variant="filled"
                   fullWidth
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -248,6 +254,7 @@ const CRUDUsuariosInterno: FC = () => {
                   textFieldProps={{
                     variant: "filled",
                   }}
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -259,6 +266,7 @@ const CRUDUsuariosInterno: FC = () => {
                   textFieldProps={{
                     variant: "filled",
                   }}
+                  required
                 />
               </StyledGridItem>
               <StyledGridItem

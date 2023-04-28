@@ -24,7 +24,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
       label: "Início",
       link: "/",
       icon: <HomeIcon />,
-      profile: 1,
+      profile: 0,
     },
     {
       id: "cadastros",

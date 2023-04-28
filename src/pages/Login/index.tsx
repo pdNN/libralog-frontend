@@ -1,10 +1,12 @@
 import { FC, useCallback, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
+import { toast } from "react-toastify";
 import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 
 import { useAuth } from "hooks/auth";
 import { Wrapper, StyledContainer, ImageContainer } from "./styles";
 import Logo from "assets/libra-logo-220.png";
+import { useHistory } from "react-router";
 
 interface SignInFormData {
   email_usuario: string;
@@ -15,6 +17,8 @@ const Login: FC = () => {
   const [loading, setLoading] = useState(false);
 
   const { signIn } = useAuth();
+
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
@@ -36,25 +40,25 @@ const Login: FC = () => {
           email_usuario: data.email_usuario,
           des_senha: data.des_senha,
         });
-      } catch (err) {
+
+        toast.success(`Seja bem-vindo ao LibraLog!`);
+        history.push("/");
+      } catch (err: any) {
         // if (err instanceof Yup.ValidationError) {
         //   const errors = getValidationErrors(err);
         //   formRef.current?.setErrors(errors);
         // }
-        // console.error(err.message);
-        // addToast({
-        //   type: 'error',
-        //   title:
-        //     typeof err.response?.data.message === 'string'
-        //       ? err.response?.data.message
-        //       : 'Erro na autênticação',
-        //   description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
-        // });
+        toast.error(
+          err.response?.data.message
+            ? err.response?.data.message
+            : "Ocorreu um erro ao fazer login, cheque as credenciais.",
+        );
+        console.error(`Erro: ${err.response?.data.message}`);
       } finally {
         setLoading(false);
       }
     },
-    [signIn],
+    [signIn, history],
   );
 
   return (
@@ -75,6 +79,7 @@ const Login: FC = () => {
               name="email_usuario"
               autoComplete="email"
               variant="filled"
+              required
             />
             <TextFieldElement
               margin="normal"
@@ -85,6 +90,7 @@ const Login: FC = () => {
               id="des_senha"
               autoComplete="current-password"
               variant="filled"
+              required
             />
           </Stack>
           <Button
