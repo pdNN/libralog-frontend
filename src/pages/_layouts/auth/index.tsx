@@ -47,6 +47,13 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
           icon: <PeopleAltRoundedIcon />,
           profile: 1,
         },
+        {
+          id: "bancas",
+          label: "Bancas",
+          link: "/cadastros/bancas",
+          icon: <BusinessIcon />,
+          profile: 1,
+        },
       ],
     },
   ];
