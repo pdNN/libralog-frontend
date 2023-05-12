@@ -3,11 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
-import {
-  AutocompleteElement,
-  FormContainer,
-  TextFieldElement,
-} from "react-hook-form-mui";
+import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 
 import { Stack, Typography } from "@mui/material";
 
@@ -22,6 +18,7 @@ import {
 } from "../styles";
 
 import loadingSrc from "assets/loading.svg";
+import { IBancaDTO } from "dtos/IBancaDTO";
 
 interface ParamsTypes {
   id: string | undefined;
@@ -29,10 +26,10 @@ interface ParamsTypes {
 
 const CRUDBancasInterno: FC = () => {
   const { id } = useParams<ParamsTypes>();
-  console.log(id);
+
   const history = useHistory();
 
-  const [data, setData] = useState();
+  const [data, setData] = useState<IBancaDTO>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
@@ -182,7 +179,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
-                  name="razao_social"
+                  name="des_razao_social"
                   placeholder="Razão Social"
                   label="Razão Social"
                   type="string"
@@ -191,20 +188,9 @@ const CRUDBancasInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
+              <StyledGridItem item sm={12} lg={10}>
                 <TextFieldElement
-                  name="tipo"
-                  placeholder="Tipo"
-                  label="Tipo"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={7}>
-                <TextFieldElement
-                  name="endereco"
+                  name="des_endereco"
                   placeholder="Endereço"
                   label="Endereço"
                   type="string"
@@ -215,7 +201,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={2}>
                 <TextFieldElement
-                  name="numero"
+                  name="nr_endereco"
                   placeholder="Nº"
                   label="Nº"
                   type="string"
@@ -226,7 +212,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={3}>
                 <TextFieldElement
-                  name="bairro"
+                  name="des_bairro"
                   placeholder="Bairro"
                   label="Bairro"
                   type="string"
@@ -237,7 +223,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
-                  name="cidade"
+                  name="des_cidade"
                   placeholder="Cidade"
                   label="Cidade"
                   type="string"
@@ -248,7 +234,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={3}>
                 <TextFieldElement
-                  name="cep"
+                  name="nr_cep"
                   placeholder="CEP"
                   label="CEP"
                   type="string"
@@ -259,7 +245,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
-                  name="cnpj"
+                  name="cod_cnpj"
                   placeholder="CNPJ"
                   label="CNPJ"
                   type="string"
@@ -270,7 +256,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
-                  name="insc_estadual"
+                  name="cod_insc_estadual"
                   placeholder="Inscrição Estadual"
                   label="Inscrição Estadual"
                   type="string"
@@ -281,7 +267,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
-                  name="contato"
+                  name="des_contato"
                   placeholder="Contato"
                   label="Contato"
                   type="string"
@@ -292,7 +278,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
-                  name="telefone"
+                  name="nr_telefone"
                   placeholder="Telefone"
                   label="Telefone"
                   type="string"
@@ -303,7 +289,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
-                  name="email"
+                  name="des_email"
                   placeholder="E-mail"
                   label="E-mail"
                   type="string"

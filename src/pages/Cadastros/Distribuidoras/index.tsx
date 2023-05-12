@@ -14,11 +14,12 @@ import { StyledButton, StyledStack } from "../styles";
 
 import Listagem, { ICells } from "components/Listagem";
 import ListRow from "components/Listagem/ListRow";
+import { IDistribuidoraDTO } from "dtos/IDistribuidoraDTO";
 
 const CRUDDistribuidoras: FC = () => {
   const history = useHistory();
 
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<IDistribuidoraDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
@@ -26,7 +27,7 @@ const CRUDDistribuidoras: FC = () => {
     await api
       .get("/distribuidoras")
       .then(async (res: AxiosResponse) => {
-        const tmpData: any[] = [];
+        const tmpData: IDistribuidoraDTO[] = [];
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;

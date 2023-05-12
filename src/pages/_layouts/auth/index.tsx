@@ -9,6 +9,7 @@ import {
   ContentPaste as ContentPasteIcon,
   Home as HomeIcon,
   PeopleAltRounded as PeopleAltRoundedIcon,
+  Storefront as StorefrontIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -51,7 +52,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
           id: "bancas",
           label: "Bancas",
           link: "/cadastros/bancas",
-          icon: <BusinessIcon />,
+          icon: <StorefrontIcon />,
           profile: 1,
         },
       ],

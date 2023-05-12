@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, cloneElement, useCallback, useState } from "react";
 
 import {
   ListItem as MUIListItem,
@@ -7,6 +7,7 @@ import {
   ListItemText,
   Collapse,
   List,
+  useTheme,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { IItems } from ".";
@@ -18,6 +19,8 @@ interface IListItem {
 }
 
 const ListItem: FC<IListItem> = ({ item, isNested }) => {
+  const theme = useTheme();
+
   const history = useHistory();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -43,7 +46,13 @@ const ListItem: FC<IListItem> = ({ item, isNested }) => {
         sx={{ pl: isNested ? 4 : "auto" }}
       >
         <ListItemButton onClick={handleClick}>
-          {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
+          {item.icon && (
+            <ListItemIcon>
+              {cloneElement(item.icon as any, {
+                sx: { color: theme.palette.primary.main },
+              })}
+            </ListItemIcon>
+          )}
           <ListItemText primary={item.label} />
           {hasNested && (open ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>

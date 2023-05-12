@@ -14,11 +14,12 @@ import { StyledButton, StyledStack } from "../styles";
 
 import Listagem, { ICells } from "components/Listagem";
 import ListRow from "components/Listagem/ListRow";
+import { IBancaDTO } from "dtos/IBancaDTO";
 
 const CRUDBancas: FC = () => {
   const history = useHistory();
 
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<IBancaDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
@@ -26,7 +27,7 @@ const CRUDBancas: FC = () => {
     await api
       .get("/bancas")
       .then(async (res: AxiosResponse) => {
-        const tmpData: any[] = [];
+        const tmpData: IBancaDTO[] = [];
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;
@@ -92,31 +93,27 @@ const CRUDBancas: FC = () => {
       label: "Nome",
     },
     {
-      id: "razao_social",
+      id: "des_razao_social",
       label: "Razão Social",
     },
     {
-      id: "tipo",
-      label: "Tipo",
-    },
-    {
-      id: "contato",
+      id: "des_contato",
       label: "Contato",
     },
     {
-      id: "telefone",
+      id: "nr_telefone",
       label: "Telefone",
     },
     {
-      id: "cnpj",
+      id: "cod_cnpj",
       label: "CNPJ",
     },
     {
-      id: "insc_estadual",
+      id: "cod_insc_estadual",
       label: "Inscrição Estatual",
     },
     {
-      id: "email",
+      id: "des_email",
       label: "E-mail",
     },
   ];
@@ -141,7 +138,7 @@ const CRUDBancas: FC = () => {
       <Listagem data={data} loading={loading} cells={cells}>
         <ListRow
           cells={cells}
-          cod_id="cod_bancas"
+          cod_id="cod_banca"
           link="/cadastros/bancas"
           deleteFnc={deleteRow}
         />

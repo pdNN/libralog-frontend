@@ -3,11 +3,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
-import {
-  AutocompleteElement,
-  FormContainer,
-  TextFieldElement,
-} from "react-hook-form-mui";
+import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { Stack, Typography } from "@mui/material";
 
@@ -22,21 +20,37 @@ import {
 } from "../styles";
 
 import loadingSrc from "assets/loading.svg";
+import { IDistribuidoraDTO } from "dtos/IDistribuidoraDTO";
 
 interface ParamsTypes {
   id: string | undefined;
 }
+
+const createSchema = z.object({
+  nome_distribuidora: z
+    .string({
+      required_error: "O nome é obrigatório.",
+    })
+    .min(1, { message: "O nome deve ser preenchido" }),
+  qtd_licencas: z.number().optional(),
+});
+
+const updateSchema = z.object({
+  nome_distribuidora: z.string().optional(),
+  qtd_licencas: z.number().optional(),
+});
 
 const CRUDDistribuidorasInterno: FC = () => {
   const { id } = useParams<ParamsTypes>();
 
   const history = useHistory();
 
-  const [data, setData] = useState();
+  const [data, setData] = useState<IDistribuidoraDTO>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
     defaultValues: data,
+    resolver: zodResolver(id === "novo" ? createSchema : updateSchema),
   });
 
   const { reset } = formContext;
@@ -181,7 +195,6 @@ const CRUDDistribuidorasInterno: FC = () => {
                   label="Nome"
                   variant="filled"
                   fullWidth
-                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -192,7 +205,6 @@ const CRUDDistribuidorasInterno: FC = () => {
                   type="number"
                   variant="filled"
                   fullWidth
-                  required
                 />
               </StyledGridItem>
               <StyledGridItem
