@@ -7,6 +7,7 @@ import {
   TableHead,
   Stack,
   Card,
+  Typography,
 } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "./styles";
 import loadingSrc from "assets/loading.svg";
@@ -35,7 +36,15 @@ const Listagem: FC<IListagem> = (props) => {
         width: "100%",
       }}
     >
-      {!data || loading ? (
+      {data.length === 0 ? (
+        <Stack
+          sx={{ width: "100%", padding: "10rem 0" }}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Typography component="p">Lista vazia</Typography>
+        </Stack>
+      ) : !data || loading ? (
         <Stack
           sx={{ width: "100%" }}
           alignItems="center"
