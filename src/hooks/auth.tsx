@@ -1,3 +1,4 @@
+import { IUsuarioDTO } from "dtos/IUsuarioDTO";
 import {
   FC,
   ReactNode,
@@ -7,13 +8,6 @@ import {
   useContext,
 } from "react";
 import api from "services/api";
-
-interface IUsuarioDTO {
-  cod_usuario: number;
-  nome_usuario: string;
-  cod_perfil: number;
-  cod_distribuidora: number;
-}
 
 interface AuthState {
   token: string;

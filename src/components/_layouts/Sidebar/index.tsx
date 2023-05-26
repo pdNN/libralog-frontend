@@ -16,7 +16,6 @@ export interface IItems {
   label: string;
   link: string;
   icon: ReactNode;
-  profile: number;
   nested?: IItems[];
 }
 
@@ -57,7 +56,7 @@ const Sidebar: FC<ISidebar> = ({ open, items, handleSidebarClose }) => {
       <List>
         {items.map(
           (item, index) =>
-            (item.profile === 0 || item.profile === usuario.cod_perfil) && (
+            usuario.perfil?.permissoes.includes("super") && (
               <ListItem key={item.id} item={item} />
             ),
         )}
