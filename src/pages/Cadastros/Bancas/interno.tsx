@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
 import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { Stack, Typography } from "@mui/material";
 
@@ -24,6 +26,84 @@ interface ParamsTypes {
   id: string | undefined;
 }
 
+const createSchema = z.object({
+  nome_banca: z
+    .string({
+      required_error: "O nome é obrigatório.",
+    })
+    .min(1, { message: "O nome deve ser preenchido" }),
+  des_razao_social: z
+    .string({
+      required_error: "Razão Social é obrigatório.",
+    })
+    .min(1, { message: "Razão Social deve ser preenchido" }),
+  des_contato: z
+    .string({
+      required_error: "Contato é obrigatório.",
+    })
+    .min(1, { message: "Contato deve ser preenchido" }),
+  nr_telefone: z
+    .string({
+      required_error: "Telefone é obrigatório.",
+    })
+    .min(1, { message: "Telefone deve ser preenchido" }),
+  cod_cnpj: z
+    .string({
+      required_error: "CNPJ é obrigatório.",
+    })
+    .min(1, { message: "CNPJ deve ser preenchido" }),
+  cod_insc_estadual: z
+    .string({
+      required_error: "IE é obrigatório.",
+    })
+    .min(1, { message: "IE deve ser preenchido" }),
+  des_email: z
+    .string({
+      required_error: "Email é obrigatório.",
+    })
+    .min(1, { message: "Email deve ser preenchido" }),
+  des_endereco: z
+    .string({
+      required_error: "Endereço é obrigatório.",
+    })
+    .min(1, { message: "Endereço deve ser preenchido" }),
+  des_bairro: z
+    .string({
+      required_error: "Bairro é obrigatório.",
+    })
+    .min(1, { message: "Bairro deve ser preenchido" }),
+  nr_endereco: z
+    .string({
+      required_error: "Número é obrigatório.",
+    })
+    .min(1, { message: "Número deve ser preenchido" }),
+  des_cidade: z
+    .string({
+      required_error: "Cidade é obrigatório.",
+    })
+    .min(1, { message: "Cidade deve ser preenchido" }),
+  nr_cep: z
+    .string({
+      required_error: "CEP é obrigatório.",
+    })
+    .min(1, { message: "CEP deve ser preenchido" }),
+});
+
+const updateSchema = z.object({
+  nome_banca: z.string().optional(),
+  des_razao_social: z.string().optional(),
+  des_contato: z.string().optional(),
+  des_endereco: z.string().optional(),
+  nr_endereco: z.string().optional(),
+  des_bairro: z.string().optional(),
+  des_cidade: z.string().optional(),
+  nr_cep: z.string().optional(),
+  nr_telefone: z.string().optional(),
+  cod_cnpj: z.string().optional(),
+  cod_insc_estadual: z.string().optional(),
+  des_email: z.string().optional(),
+});
+
 const CRUDBancasInterno: FC = () => {
   const { id } = useParams<ParamsTypes>();
 
@@ -34,6 +114,7 @@ const CRUDBancasInterno: FC = () => {
 
   const formContext = useForm({
     defaultValues: data,
+    resolver: zodResolver(id === "novo" ? createSchema : updateSchema),
   });
 
   const { reset } = formContext;
