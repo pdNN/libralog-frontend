@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { FC } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -6,6 +7,7 @@ import { Stack, IconButton } from "@mui/material";
 import {
   EditRounded as EditRoundedIcon,
   DeleteForeverRounded as DeleteForeverRoundedIcon,
+  Pageview as PageviewIcon,
 } from "@mui/icons-material";
 
 import { StyledTableCell, StyledTableRow } from "components/Listagem/styles";
@@ -53,6 +55,14 @@ const ListRow: FC<IRow> = (props) => {
           alignItems="center"
           justifyContent="flex-end"
         >
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              history.push(`${link}/${row_id}`);
+            }}
+          >
+            <PageviewIcon/>
+          </IconButton>
           <IconButton
             onClick={(e) => {
               e.stopPropagation();
