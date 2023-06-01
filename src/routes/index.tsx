@@ -17,6 +17,9 @@ import CRUDUsuariosInterno from "pages/Cadastros/Usuarios/interno";
 import CRUDBancas from "pages/Cadastros/Bancas";
 import CRUDBancasInterno from "pages/Cadastros/Bancas/interno";
 
+import CRUDEntregadores from "pages/Cadastros/Entregadores";
+import CRUDEntregadoresInterno from "pages/Cadastros/Entregadores/interno";
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/login" exact component={Login} />
@@ -51,6 +54,20 @@ const Routes: React.FC = () => (
       component={CRUDBancasInterno}
       isAdmin
     />
+
+    <Route
+      path="/cadastros/entregadores"
+      exact
+      component={CRUDEntregadores}
+      isAdmin
+    />
+    <Route
+      path="/cadastros/Entregadores/:id"
+      exact
+      component={CRUDEntregadoresInterno}
+      isAdmin
+    />
+
     <Route component={Pag404} isPrivate />
   </Switch>
 );

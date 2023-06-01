@@ -10,6 +10,7 @@ import {
   Home as HomeIcon,
   PeopleAltRounded as PeopleAltRoundedIcon,
   Storefront as StorefrontIcon,
+  LocalShipping as LocalShippingIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -49,6 +50,12 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
           label: "Bancas",
           link: "/cadastros/bancas",
           icon: <StorefrontIcon />,
+        },
+        {
+          id: "entregadores",
+          label: "Entregadores",
+          link: "/cadastros/entregadores",
+          icon: <LocalShippingIcon />,
         },
       ],
     },
