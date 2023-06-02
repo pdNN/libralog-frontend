@@ -11,6 +11,7 @@ import {
   PeopleAltRounded as PeopleAltRoundedIcon,
   Storefront as StorefrontIcon,
   LocalShipping as LocalShippingIcon,
+  LibraryBooks as LibraryBooksIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -56,6 +57,12 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
           label: "Entregadores",
           link: "/cadastros/entregadores",
           icon: <LocalShippingIcon />,
+        },
+        {
+          id: "editoras",
+          label: "Editoras",
+          link: "/cadastros/editoras",
+          icon: <LibraryBooksIcon />,
         },
       ],
     },
