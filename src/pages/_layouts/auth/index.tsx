@@ -12,6 +12,7 @@ import {
   Storefront as StorefrontIcon,
   LocalShipping as LocalShippingIcon,
   LibraryBooks as LibraryBooksIcon,
+  MenuBook as MenuBookIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -63,6 +64,12 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
           label: "Editoras",
           link: "/cadastros/editoras",
           icon: <LibraryBooksIcon />,
+        },
+        {
+          id: "revistas",
+          label: "Revistas",
+          link: "/cadastros/revistas",
+          icon: <MenuBookIcon />,
         },
       ],
     },

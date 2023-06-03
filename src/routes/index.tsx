@@ -23,6 +23,9 @@ import CRUDEntregadoresInterno from "pages/Cadastros/Entregadores/interno";
 import CRUDEditoras from "pages/Cadastros/Editoras";
 import CRUDEditorasInterno from "pages/Cadastros/Editoras/interno";
 
+import CRUDRevistas from "pages/Cadastros/Revistas";
+import CRUDRevistasInterno from "pages/Cadastros/Revistas/interno";
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/login" exact component={Login} />
@@ -76,6 +79,14 @@ const Routes: React.FC = () => (
       path="/cadastros/Editoras/:id"
       exact
       component={CRUDEditorasInterno}
+      isAdmin
+    />
+
+    <Route path="/cadastros/revistas" exact component={CRUDRevistas} isAdmin />
+    <Route
+      path="/cadastros/Revistas/:id"
+      exact
+      component={CRUDRevistasInterno}
       isAdmin
     />
 

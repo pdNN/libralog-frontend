@@ -25,14 +25,14 @@ import {
 
 import loadingSrc from "assets/loading.svg";
 import { ISelect } from "dtos/IUtils";
-import { IEditoraDTO } from "dtos/IEditoraDTO";
+import { IRevistaDTO } from "dtos/IRevistaDTO";
 
 interface ParamsTypes {
   id: string | undefined;
 }
 
 const createSchema = z.object({
-  nome_editora: z
+  nome_revista: z
     .string({
       required_error: "O nome é obrigatório.",
     })
@@ -95,10 +95,13 @@ const createSchema = z.object({
   cod_distribuidora: z.number({
     required_error: "Distribuidora é obrigatória",
   }),
+  cod_entregador: z.number({
+    required_error: "Distribuidora é obrigatória",
+  }),
 });
 
 const updateSchema = z.object({
-  nome_editora: z.string().optional(),
+  nome_revista: z.string().optional(),
   des_razao_social: z.string().optional(),
   des_contato: z.string().optional(),
   des_endereco: z.string().optional(),
@@ -111,15 +114,16 @@ const updateSchema = z.object({
   cod_insc_estadual: z.string().optional(),
   des_email: z.string().optional(),
   cod_distribuidora: z.number().optional(),
+  cod_entregador: z.number().optional(),
 });
 
-const CRUDEditorasInterno: FC = () => {
+const CRUDRevistasInterno: FC = () => {
   const { id } = useParams<ParamsTypes>();
 
   const history = useHistory();
 
-  const [data, setData] = useState<IEditoraDTO>();
-  const [distribuidoras, setDistribuidoras] = useState<ISelect[]>([]);
+  const [data, setData] = useState<IRevistaDTO>();
+  const [editoras, setEditoras] = useState<ISelect[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
@@ -134,7 +138,7 @@ const CRUDEditorasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/editoras/${id}`)
+        .get(`/revistas/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -152,18 +156,18 @@ const CRUDEditorasInterno: FC = () => {
     }
   }, [id, reset]);
 
-  const getDistribuidoras = useCallback(async () => {
+  const getEditoras = useCallback(async () => {
     setLoading(true);
 
     await api
-      .get(`/distribuidoras`)
+      .get(`/editoras`)
       .then(async (res: AxiosResponse) => {
         const dists = res.data.map((dat: any) => ({
-          id: dat.cod_distribuidora,
-          label: dat.nome_distribuidora,
+          id: dat.cod_editora,
+          label: dat.nome_editora,
         }));
 
-        setDistribuidoras(dists);
+        setEditoras(dists);
       })
       .catch((err: any) => {
         toast.error(
@@ -177,41 +181,18 @@ const CRUDEditorasInterno: FC = () => {
     setLoading(false);
   }, []);
 
-  const deleteRow = useCallback(async () => {
-    if (id !== "novo") {
-      setLoading(true);
-
-      await api
-        .delete(`/editoras/${id}`)
-        .then(async (res: AxiosResponse) => {
-          toast.success(`Editora ${id} deletada com sucesso`);
-          history.push("/cadastros/editoras");
-        })
-        .catch((err: any) => {
-          toast.error(
-            err.response?.data.message
-              ? err.response?.data.message
-              : "Ocorreu um erro",
-          );
-          console.error(`Erro: ${err.response?.data.message}`);
-        });
-
-      setLoading(false);
-    }
-  }, [id, history]);
-
   const handleSave = useCallback(
     async (data: any) => {
       setLoading(true);
 
       if (id === "novo") {
         await api
-          .post(`/editoras`, data)
+          .post(`/revistas`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
-              `Editora #${res.data.cod_editora} criada com sucesso`,
+              `Revista #${res.data.cod_revista} criada com sucesso`,
             );
-            history.push(`/cadastros/editoras/${res.data.cod_editora}`);
+            history.push(`/cadastros/revistas/${res.data.cod_revista}`);
           })
           .catch((err: any) => {
             toast.error(
@@ -223,10 +204,10 @@ const CRUDEditorasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/editoras/${id}`, data)
+          .put(`/revistas/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
-              `Editora #${res.data.cod_editora} atualizada com sucesso`,
+              `Revista #${res.data.cod_revista} atualizada com sucesso`,
             );
             getData();
           })
@@ -250,8 +231,8 @@ const CRUDEditorasInterno: FC = () => {
   }, [getData]);
 
   useEffect(() => {
-    getDistribuidoras();
-  }, [getDistribuidoras]);
+    getEditoras();
+  }, [getEditoras]);
 
   return (
     <StyledDefaultBox>
@@ -273,7 +254,7 @@ const CRUDEditorasInterno: FC = () => {
         <>
           <StyledStack>
             <Typography sx={{ width: "100%" }} component="h2">
-              {id === "novo" ? "Nova Editora" : `Editora #${id}`}
+              {id === "novo" ? "Nova Revista" : `Revista #${id}`}
             </Typography>
           </StyledStack>
           <FormContainer
@@ -289,143 +270,33 @@ const CRUDEditorasInterno: FC = () => {
             }}
           >
             <StyledGrid container spacing={2}>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
-                  name="nome_editora"
-                  placeholder="Nome da Editora"
+                  name="nome_revista"
+                  placeholder="Nome da Revista"
                   label="Nome"
                   variant="filled"
                   fullWidth
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
-                  name="des_razao_social"
-                  placeholder="Razão Social"
-                  label="Razão Social"
+                  name="nr_isbn"
+                  placeholder="ISBN"
+                  label="ISBN"
                   type="string"
                   variant="filled"
                   fullWidth
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={10}>
-                <TextFieldElement
-                  name="des_endereco"
-                  placeholder="Endereço"
-                  label="Endereço"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={2}>
-                <TextFieldElement
-                  name="nr_endereco"
-                  placeholder="Nº"
-                  label="Nº"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
-                <TextFieldElement
-                  name="des_bairro"
-                  placeholder="Bairro"
-                  label="Bairro"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
-                <TextFieldElement
-                  name="des_cidade"
-                  placeholder="Cidade"
-                  label="Cidade"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
-                <TextFieldElement
-                  name="nr_cep"
-                  placeholder="CEP"
-                  label="CEP"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
-                <TextFieldElement
-                  name="cod_cnpj"
-                  placeholder="CNPJ"
-                  label="CNPJ"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
-                <TextFieldElement
-                  name="cod_insc_estadual"
-                  placeholder="Inscrição Estadual"
-                  label="Inscrição Estadual"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
-                <TextFieldElement
-                  name="des_contato"
-                  placeholder="Contato"
-                  label="Contato"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
-                <TextFieldElement
-                  name="nr_telefone"
-                  placeholder="Telefone"
-                  label="Telefone"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
-                <TextFieldElement
-                  name="des_email"
-                  placeholder="E-mail"
-                  label="E-mail"
-                  type="string"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
-                  label="Distribuidora"
+                  label="Editora"
                   matchId
-                  name="cod_distribuidora"
-                  options={distribuidoras}
+                  name="cod_editora"
+                  options={editoras}
                   textFieldProps={{
                     variant: "filled",
                   }}
@@ -449,4 +320,4 @@ const CRUDEditorasInterno: FC = () => {
   );
 };
 
-export default CRUDEditorasInterno;
+export default CRUDRevistasInterno;
