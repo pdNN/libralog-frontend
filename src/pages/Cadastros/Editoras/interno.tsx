@@ -3,7 +3,11 @@ import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
-import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import {
+  FormContainer,
+  TextFieldElement,
+  AutocompleteElement,
+} from "react-hook-form-mui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -87,6 +91,9 @@ const createSchema = z.object({
       required_error: "CEP é obrigatório.",
     })
     .min(1, { message: "CEP deve ser preenchido" }),
+  cod_distribuidora: z.number({
+    required_error: "Distribuidora é obrigatória",
+  }),
 });
 
 const updateSchema = z.object({
@@ -102,6 +109,7 @@ const updateSchema = z.object({
   cod_cnpj: z.string().optional(),
   cod_insc_estadual: z.string().optional(),
   des_email: z.string().optional(),
+  cod_distribuidora: z.number().optional(),
 });
 
 const CRUDEditorasInterno: FC = () => {
@@ -110,6 +118,7 @@ const CRUDEditorasInterno: FC = () => {
   const history = useHistory();
 
   const [data, setData] = useState<IEditoraDTO>();
+  const [distribuidoras, setDistribuidoras] = useState<ISelect[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
@@ -141,6 +150,31 @@ const CRUDEditorasInterno: FC = () => {
       setLoading(false);
     }
   }, [id, reset]);
+
+  const getDistribuidoras = useCallback(async () => {
+    setLoading(true);
+
+    await api
+      .get(`/distribuidoras`)
+      .then(async (res: AxiosResponse) => {
+        const dists = res.data.map((dat: any) => ({
+          id: dat.cod_distribuidora,
+          label: dat.nome_distribuidora,
+        }));
+
+        setDistribuidoras(dists);
+      })
+      .catch((err: any) => {
+        toast.error(
+          err.response?.data.message
+            ? err.response?.data.message
+            : "Ocorreu um erro",
+        );
+        console.error(`Erro: ${err.response?.data.message}`);
+      });
+
+    setLoading(false);
+  }, []);
 
   const deleteRow = useCallback(async () => {
     if (id !== "novo") {
@@ -213,6 +247,10 @@ const CRUDEditorasInterno: FC = () => {
   useEffect(() => {
     getData();
   }, [getData]);
+
+  useEffect(() => {
+    getDistribuidoras();
+  }, [getDistribuidoras]);
 
   return (
     <StyledDefaultBox>
@@ -348,7 +386,7 @@ const CRUDEditorasInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={4}>
+              <StyledGridItem item sm={12} lg={3}>
                 <TextFieldElement
                   name="des_contato"
                   placeholder="Contato"
@@ -359,7 +397,7 @@ const CRUDEditorasInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={4}>
+              <StyledGridItem item sm={12} lg={3}>
                 <TextFieldElement
                   name="nr_telefone"
                   placeholder="Telefone"
@@ -370,7 +408,7 @@ const CRUDEditorasInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={4}>
+              <StyledGridItem item sm={12} lg={3}>
                 <TextFieldElement
                   name="des_email"
                   placeholder="E-mail"
@@ -379,6 +417,17 @@ const CRUDEditorasInterno: FC = () => {
                   variant="filled"
                   fullWidth
                   required
+                />
+              </StyledGridItem>
+              <StyledGridItem item sm={12} lg={3}>
+                <AutocompleteElement
+                  label="Distribuidora"
+                  matchId
+                  name="cod_distribuidora"
+                  options={distribuidoras}
+                  textFieldProps={{
+                    variant: "filled",
+                  }}
                 />
               </StyledGridItem>
               <StyledGridItem

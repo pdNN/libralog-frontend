@@ -3,7 +3,11 @@ import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
-import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import {
+  FormContainer,
+  TextFieldElement,
+  AutocompleteElement,
+} from "react-hook-form-mui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -20,6 +24,7 @@ import {
 } from "../styles";
 
 import loadingSrc from "assets/loading.svg";
+import { ISelect } from "dtos/IUtils";
 import { IBancaDTO } from "dtos/IBancaDTO";
 
 interface ParamsTypes {
@@ -87,6 +92,12 @@ const createSchema = z.object({
       required_error: "CEP é obrigatório.",
     })
     .min(1, { message: "CEP deve ser preenchido" }),
+  cod_distribuidora: z.number({
+    required_error: "Distribuidora é obrigatória",
+  }),
+  cod_entregador: z.number({
+    required_error: "Distribuidora é obrigatória",
+  }),
 });
 
 const updateSchema = z.object({
@@ -102,6 +113,8 @@ const updateSchema = z.object({
   cod_cnpj: z.string().optional(),
   cod_insc_estadual: z.string().optional(),
   des_email: z.string().optional(),
+  cod_distribuidora: z.number().optional(),
+  cod_entregador: z.number().optional(),
 });
 
 const CRUDBancasInterno: FC = () => {
@@ -110,6 +123,8 @@ const CRUDBancasInterno: FC = () => {
   const history = useHistory();
 
   const [data, setData] = useState<IBancaDTO>();
+  const [distribuidoras, setDistribuidoras] = useState<ISelect[]>([]);
+  const [entregadores, setEntregadores] = useState<ISelect[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
@@ -141,6 +156,56 @@ const CRUDBancasInterno: FC = () => {
       setLoading(false);
     }
   }, [id, reset]);
+
+  const getDistribuidoras = useCallback(async () => {
+    setLoading(true);
+
+    await api
+      .get(`/distribuidoras`)
+      .then(async (res: AxiosResponse) => {
+        const dists = res.data.map((dat: any) => ({
+          id: dat.cod_distribuidora,
+          label: dat.nome_distribuidora,
+        }));
+
+        setDistribuidoras(dists);
+      })
+      .catch((err: any) => {
+        toast.error(
+          err.response?.data.message
+            ? err.response?.data.message
+            : "Ocorreu um erro",
+        );
+        console.error(`Erro: ${err.response?.data.message}`);
+      });
+
+    setLoading(false);
+  }, []);
+
+  const getEntregadores = useCallback(async () => {
+    setLoading(true);
+
+    await api
+      .get(`/entregadores`)
+      .then(async (res: AxiosResponse) => {
+        const dists = res.data.map((dat: any) => ({
+          id: dat.cod_entregador,
+          label: dat.nome_entregador,
+        }));
+
+        setEntregadores(dists);
+      })
+      .catch((err: any) => {
+        toast.error(
+          err.response?.data.message
+            ? err.response?.data.message
+            : "Ocorreu um erro",
+        );
+        console.error(`Erro: ${err.response?.data.message}`);
+      });
+
+    setLoading(false);
+  }, []);
 
   const deleteRow = useCallback(async () => {
     if (id !== "novo") {
@@ -212,6 +277,13 @@ const CRUDBancasInterno: FC = () => {
     getData();
   }, [getData]);
 
+  useEffect(() => {
+    getDistribuidoras();
+  }, [getDistribuidoras]);
+
+  useEffect(() => {
+    getEntregadores();
+  }, [getEntregadores]);
   return (
     <StyledDefaultBox>
       {loading ? (
@@ -377,6 +449,28 @@ const CRUDBancasInterno: FC = () => {
                   variant="filled"
                   fullWidth
                   required
+                />
+              </StyledGridItem>
+              <StyledGridItem item sm={12} lg={6}>
+                <AutocompleteElement
+                  label="Distribuidora"
+                  matchId
+                  name="cod_distribuidora"
+                  options={distribuidoras}
+                  textFieldProps={{
+                    variant: "filled",
+                  }}
+                />
+              </StyledGridItem>
+              <StyledGridItem item sm={12} lg={6}>
+                <AutocompleteElement
+                  label="Entregador"
+                  matchId
+                  name="cod_entregador"
+                  options={entregadores}
+                  textFieldProps={{
+                    variant: "filled",
+                  }}
                 />
               </StyledGridItem>
               <StyledGridItem
