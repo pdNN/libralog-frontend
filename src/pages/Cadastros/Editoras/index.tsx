@@ -61,7 +61,7 @@ const CRUDEditoras: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/editoras/${row_id}`)
+        .delete(`/editoras/editora/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Editora ${row_id} deletada com sucesso`);
           getData();

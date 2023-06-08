@@ -112,7 +112,7 @@ const CRUDEntregadoresInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/entregadores/${id}`)
+        .get(`/entregadores/entregador/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -135,7 +135,7 @@ const CRUDEntregadoresInterno: FC = () => {
       setLoading(true);
 
       await api
-        .delete(`/entregadores/${id}`)
+        .delete(`/entregadores/entregador/${id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Entregador ${id} deletado com sucesso`);
           history.push("/cadastros/entregadores");
@@ -176,7 +176,7 @@ const CRUDEntregadoresInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/entregadores/${id}`, data)
+          .put(`/entregadores/entregador/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Entregador #${res.data.cod_entregador} atualizado com sucesso`,

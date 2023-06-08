@@ -20,7 +20,7 @@ interface IAuthLayout {
 }
 
 const AuthLayout: FC<IAuthLayout> = ({ children }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
 
   const sidebarItens: IItems[] = [
     {

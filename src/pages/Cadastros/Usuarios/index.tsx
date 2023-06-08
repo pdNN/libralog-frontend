@@ -96,7 +96,7 @@ const CRUDUsuarios: FC = () => {
       label: "E-mail",
     },
     {
-      id: "des_perfil",
+      id: "perfil.nome_perfil",
       label: "Perfil",
     },
     {
@@ -108,7 +108,7 @@ const CRUDUsuarios: FC = () => {
       label: "Dt. Criação",
     },
     {
-      id: "cod_distribuidora",
+      id: "distribuidora.nome_distribuidora",
       label: "Distribuidora",
     },
   ];

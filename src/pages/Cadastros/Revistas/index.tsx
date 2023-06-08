@@ -61,7 +61,7 @@ const CRUDRevistas: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/revistas/${row_id}`)
+        .delete(`/revistas/revista/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Revista ${row_id} deletada com sucesso`);
           getData();

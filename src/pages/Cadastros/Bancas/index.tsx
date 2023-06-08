@@ -61,7 +61,7 @@ const CRUDBancas: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/bancas/${row_id}`)
+        .delete(`/bancas/banca/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Banca ${row_id} deletada com sucesso`);
           getData();

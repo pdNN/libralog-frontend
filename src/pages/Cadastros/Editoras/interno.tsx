@@ -134,7 +134,7 @@ const CRUDEditorasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/editoras/${id}`)
+        .get(`/editoras/editora/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -182,7 +182,7 @@ const CRUDEditorasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .delete(`/editoras/${id}`)
+        .delete(`/editoras/editora/${id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Editora ${id} deletada com sucesso`);
           history.push("/cadastros/editoras");
@@ -223,7 +223,7 @@ const CRUDEditorasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/editoras/${id}`, data)
+          .put(`/editoras/editora/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Editora #${res.data.cod_editora} atualizada com sucesso`,

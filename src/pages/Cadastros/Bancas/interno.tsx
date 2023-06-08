@@ -139,7 +139,7 @@ const CRUDBancasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/bancas/${id}`)
+        .get(`/bancas/banca/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -212,7 +212,7 @@ const CRUDBancasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .delete(`/bancas/${id}`)
+        .delete(`/bancas/banca/${id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Banca ${id} deletada com sucesso`);
           history.push("/cadastros/bancas");
@@ -251,7 +251,7 @@ const CRUDBancasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/bancas/${id}`, data)
+          .put(`/bancas/banca/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Banca #${res.data.cod_banca} atualizada com sucesso`,

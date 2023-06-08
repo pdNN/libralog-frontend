@@ -55,7 +55,7 @@ const Routes: React.FC = () => (
 
     <Route path="/cadastros/bancas" exact component={CRUDBancas} isAdmin />
     <Route
-      path="/cadastros/Bancas/:id"
+      path="/cadastros/bancas/:id"
       exact
       component={CRUDBancasInterno}
       isAdmin
@@ -68,7 +68,7 @@ const Routes: React.FC = () => (
       isAdmin
     />
     <Route
-      path="/cadastros/Entregadores/:id"
+      path="/cadastros/entregadores/:id"
       exact
       component={CRUDEntregadoresInterno}
       isAdmin
@@ -76,7 +76,7 @@ const Routes: React.FC = () => (
 
     <Route path="/cadastros/editoras" exact component={CRUDEditoras} isAdmin />
     <Route
-      path="/cadastros/Editoras/:id"
+      path="/cadastros/editoras/:id"
       exact
       component={CRUDEditorasInterno}
       isAdmin
@@ -84,7 +84,7 @@ const Routes: React.FC = () => (
 
     <Route path="/cadastros/revistas" exact component={CRUDRevistas} isAdmin />
     <Route
-      path="/cadastros/Revistas/:id"
+      path="/cadastros/revistas/:id"
       exact
       component={CRUDRevistasInterno}
       isAdmin

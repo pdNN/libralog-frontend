@@ -60,7 +60,7 @@ const CRUDDistribuidorasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/distribuidoras/${id}`)
+        .get(`/distribuidoras/distribuidora/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -83,7 +83,7 @@ const CRUDDistribuidorasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .delete(`/distribuidoras/${id}`)
+        .delete(`/distribuidoras/distribuidora/${id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Distribuidora ${id} deletada com sucesso`);
           history.push("/cadastros/distribuidoras");
@@ -126,7 +126,7 @@ const CRUDDistribuidorasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/distribuidoras/${id}`, data)
+          .put(`/distribuidoras/distribuidora/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Distribuidora #${res.data.cod_distribuidora} atualizada com sucesso`,

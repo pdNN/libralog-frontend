@@ -61,7 +61,7 @@ const CRUDEntregadores: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/entregadores/${row_id}`)
+        .delete(`/entregadores/entregador/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Entregador ${row_id} deletado com sucesso`);
           getData();

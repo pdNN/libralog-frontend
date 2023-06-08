@@ -87,7 +87,7 @@ const CRUDUsuariosInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/usuarios/${id}`)
+        .get(`/usuarios/usuario/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -130,12 +130,37 @@ const CRUDUsuariosInterno: FC = () => {
     setLoading(false);
   }, []);
 
+  const getPerfis = useCallback(async () => {
+    setLoading(true);
+
+    await api
+      .get(`/perfis/`)
+      .then(async (res: AxiosResponse) => {
+        const dists = res.data.map((dat: any) => ({
+          id: dat.cod_distribuidora,
+          label: dat.nome_distribuidora,
+        }));
+
+        setDistribuidoras(dists);
+      })
+      .catch((err: any) => {
+        toast.error(
+          err.response?.data.message
+            ? err.response?.data.message
+            : "Ocorreu um erro",
+        );
+        console.error(`Erro: ${err.response?.data.message}`);
+      });
+
+    setLoading(false);
+  }, []);
+
   const deleteRow = useCallback(async () => {
     if (id !== "novo") {
       setLoading(true);
 
       await api
-        .delete(`/usuarios/${id}`)
+        .delete(`/usuarios/usuario/${id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Usuário ${id} deletado com sucesso`);
           history.push("/cadastros/usuarios");
@@ -164,7 +189,7 @@ const CRUDUsuariosInterno: FC = () => {
             toast.success(
               `Usuário #${res.data.cod_usuario} criado com sucesso`,
             );
-            history.push(`/cadastros/usuarios/${res.data.cod_usuario}`);
+            history.push(`/cadastros/${res.data.cod_usuario}`);
           })
           .catch((err: any) => {
             toast.error(
@@ -176,7 +201,7 @@ const CRUDUsuariosInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/usuarios/${id}`, data)
+          .put(`/usuarios/usuario/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Usuário #${res.data.cod_usuario} atualizado com sucesso`,

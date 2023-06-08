@@ -138,7 +138,7 @@ const CRUDRevistasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/revistas/${id}`)
+        .get(`/revistas/revista/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -204,7 +204,7 @@ const CRUDRevistasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/revistas/${id}`, data)
+          .put(`/revistas/revista/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Revista #${res.data.cod_revista} atualizada com sucesso`,

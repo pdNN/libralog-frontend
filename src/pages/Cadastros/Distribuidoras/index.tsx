@@ -61,7 +61,7 @@ const CRUDDistribuidoras: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/distribuidoras/${row_id}`)
+        .delete(`/distribuidoras/distribuidora/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Distribuidora ${row_id} deletada com sucesso`);
           getData();
