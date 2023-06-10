@@ -143,7 +143,7 @@ const CRUDRevistasInterno: FC = () => {
           .put(`/revistas/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
-              `Revista #${res.data.cod_banca} atualizada com sucesso`,
+              `Revista #${res.data.cod_revista} atualizada com sucesso`,
             );
             getData();
           })
