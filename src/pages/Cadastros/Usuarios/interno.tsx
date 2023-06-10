@@ -305,12 +305,12 @@ const CRUDUsuariosInterno: FC = () => {
                   name="cod_perfil"
                   options={[
                     {
-                      id: 0,
+                      id: 1,
                       label: "Inicial",
                     },
                     {
-                      id: 1,
-                      label: "Admin",
+                      id: 2,
+                      label: "Super",
                     },
                   ]}
                   textFieldProps={{
