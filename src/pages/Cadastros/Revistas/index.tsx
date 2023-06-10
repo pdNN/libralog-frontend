@@ -14,12 +14,11 @@ import { StyledButton, StyledStack } from "../styles";
 
 import Listagem, { ICells } from "components/Listagem";
 import ListRow from "components/Listagem/ListRow";
-import { IRevistaDTO } from "dtos/IRevistaDTO";
 
 const CRUDRevistas: FC = () => {
   const history = useHistory();
 
-  const [data, setData] = useState<IRevistaDTO[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
@@ -27,7 +26,7 @@ const CRUDRevistas: FC = () => {
     await api
       .get("/revistas")
       .then(async (res: AxiosResponse) => {
-        const tmpData: IRevistaDTO[] = [];
+        const tmpData: any[] = [];
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;
@@ -61,7 +60,7 @@ const CRUDRevistas: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/revistas/revista/${row_id}`)
+        .delete(`/revistas/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Revista ${row_id} deletada com sucesso`);
           getData();
@@ -93,16 +92,12 @@ const CRUDRevistas: FC = () => {
       label: "Nome",
     },
     {
-      id: "nr_isbn",
+      id: "cod_edicao_revista",
       label: "ISBN",
     },
     {
-      id: "dthr_atualizacao",
-      label: "Dt. Atualização",
-    },
-    {
-      id: "dthr_criacao",
-      label: "Dt. Criação",
+      id: "cod_editora",
+      label: "Editora",
     },
   ];
 

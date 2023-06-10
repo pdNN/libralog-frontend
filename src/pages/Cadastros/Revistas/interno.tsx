@@ -25,7 +25,6 @@ import {
 
 import loadingSrc from "assets/loading.svg";
 import { ISelect } from "dtos/IUtils";
-import { IRevistaDTO } from "dtos/IRevistaDTO";
 
 interface ParamsTypes {
   id: string | undefined;
@@ -37,84 +36,20 @@ const createSchema = z.object({
       required_error: "O nome é obrigatório.",
     })
     .min(1, { message: "O nome deve ser preenchido" }),
-  des_razao_social: z
+  cod_edicao_revista: z
     .string({
-      required_error: "Razão Social é obrigatório.",
+      required_error: "ISBN é obrigatório.",
     })
-    .min(1, { message: "Razão Social deve ser preenchido" }),
-  des_contato: z
-    .string({
-      required_error: "Contato é obrigatório.",
-    })
-    .min(1, { message: "Contato deve ser preenchido" }),
-  nr_telefone: z
-    .string({
-      required_error: "Telefone é obrigatório.",
-    })
-    .min(1, { message: "Telefone deve ser preenchido" }),
-  cod_cnpj: z
-    .string({
-      required_error: "CNPJ é obrigatório.",
-    })
-    .min(1, { message: "CNPJ deve ser preenchido" }),
-  cod_insc_estadual: z
-    .string({
-      required_error: "IE é obrigatório.",
-    })
-    .min(1, { message: "IE deve ser preenchido" }),
-  des_email: z
-    .string({
-      required_error: "Email é obrigatório.",
-    })
-    .min(1, { message: "Email deve ser preenchido" }),
-  des_endereco: z
-    .string({
-      required_error: "Endereço é obrigatório.",
-    })
-    .min(1, { message: "Endereço deve ser preenchido" }),
-  des_bairro: z
-    .string({
-      required_error: "Bairro é obrigatório.",
-    })
-    .min(1, { message: "Bairro deve ser preenchido" }),
-  nr_endereco: z
-    .string({
-      required_error: "Número é obrigatório.",
-    })
-    .min(1, { message: "Número deve ser preenchido" }),
-  des_cidade: z
-    .string({
-      required_error: "Cidade é obrigatório.",
-    })
-    .min(1, { message: "Cidade deve ser preenchido" }),
-  nr_cep: z
-    .string({
-      required_error: "CEP é obrigatório.",
-    })
-    .min(1, { message: "CEP deve ser preenchido" }),
-  cod_distribuidora: z.number({
-    required_error: "Distribuidora é obrigatória",
-  }),
-  cod_entregador: z.number({
-    required_error: "Distribuidora é obrigatória",
+    .min(1, { message: "ISBN deve ser preenchido" }),
+  cod_editora: z.number({
+    required_error: "Editora é obrigatória",
   }),
 });
 
 const updateSchema = z.object({
   nome_revista: z.string().optional(),
-  des_razao_social: z.string().optional(),
-  des_contato: z.string().optional(),
-  des_endereco: z.string().optional(),
-  nr_endereco: z.string().optional(),
-  des_bairro: z.string().optional(),
-  des_cidade: z.string().optional(),
-  nr_cep: z.string().optional(),
-  nr_telefone: z.string().optional(),
-  cod_cnpj: z.string().optional(),
-  cod_insc_estadual: z.string().optional(),
-  des_email: z.string().optional(),
-  cod_distribuidora: z.number().optional(),
-  cod_entregador: z.number().optional(),
+  cod_edicao_revista: z.string().optional(),
+  cod_editora: z.number().optional(),
 });
 
 const CRUDRevistasInterno: FC = () => {
@@ -122,7 +57,7 @@ const CRUDRevistasInterno: FC = () => {
 
   const history = useHistory();
 
-  const [data, setData] = useState<IRevistaDTO>();
+  const [data, setData] = useState();
   const [editoras, setEditoras] = useState<ISelect[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -138,7 +73,7 @@ const CRUDRevistasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/revistas/revista/${id}`)
+        .get(`/revistas/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -162,12 +97,13 @@ const CRUDRevistasInterno: FC = () => {
     await api
       .get(`/editoras`)
       .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
+        const editora = res.data.map((dat: any) => ({
           id: dat.cod_editora,
           label: dat.nome_editora,
         }));
 
-        setEditoras(dists);
+        setEditoras(editora);
+        console.log(editora);
       })
       .catch((err: any) => {
         toast.error(
@@ -192,7 +128,7 @@ const CRUDRevistasInterno: FC = () => {
             toast.success(
               `Revista #${res.data.cod_revista} criada com sucesso`,
             );
-            history.push(`/cadastros/revistas/${res.data.cod_revista}`);
+            history.push(`/cadastros/${res.data.cod_revista}`);
           })
           .catch((err: any) => {
             toast.error(
@@ -204,10 +140,10 @@ const CRUDRevistasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/revistas/revista/${id}`, data)
+          .put(`/revistas/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
-              `Revista #${res.data.cod_revista} atualizada com sucesso`,
+              `Revista #${res.data.cod_banca} atualizada com sucesso`,
             );
             getData();
           })
@@ -270,7 +206,7 @@ const CRUDRevistasInterno: FC = () => {
             }}
           >
             <StyledGrid container spacing={2}>
-              <StyledGridItem item sm={12} lg={4}>
+              <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
                   name="nome_revista"
                   placeholder="Nome da Revista"
@@ -280,9 +216,9 @@ const CRUDRevistasInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={4}>
+              <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
-                  name="nr_isbn"
+                  name="cod_edicao_revista"
                   placeholder="ISBN"
                   label="ISBN"
                   type="string"
@@ -291,7 +227,7 @@ const CRUDRevistasInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={4}>
+              <StyledGridItem item sm={12} lg={6}>
                 <AutocompleteElement
                   label="Editora"
                   matchId
