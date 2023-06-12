@@ -13,6 +13,7 @@ import {
   LocalShipping as LocalShippingIcon,
   LibraryBooks as LibraryBooksIcon,
   MenuBook as MenuBookIcon,
+  AssignmentInd as AssignmentIndIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -35,6 +36,12 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
       link: "/cadastros",
       icon: <ContentPasteIcon />,
       nested: [
+        {
+          id: "perfis",
+          label: "Perfis",
+          link: "/cadastros/perfis",
+          icon: <AssignmentIndIcon />,
+        },
         {
           id: "distribuidoras",
           label: "Distribuidoras",

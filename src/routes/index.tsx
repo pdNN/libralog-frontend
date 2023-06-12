@@ -8,6 +8,9 @@ import Pag404 from "pages/404";
 import Route from "./Route";
 import Login from "pages/Login";
 
+import CRUDPerfis from "pages/Cadastros/Perfis";
+import CRUDPerfisInterno from "pages/Cadastros/Perfis/interno";
+
 import CRUDDistribuidoras from "pages/Cadastros/Distribuidoras";
 import CRUDDistribuidorasInterno from "pages/Cadastros/Distribuidoras/interno";
 
@@ -31,6 +34,14 @@ const Routes: React.FC = () => (
     <Route path="/login" exact component={Login} />
 
     <Route path="/" exact component={Inicio} isPrivate />
+
+    <Route path="/cadastros/perfis" exact component={CRUDPerfis} isAdmin />
+    <Route
+      path="/cadastros/perfis/:id"
+      exact
+      component={CRUDPerfisInterno}
+      isAdmin
+    />
 
     <Route
       path="/cadastros/distribuidoras"

@@ -475,7 +475,7 @@ const CRUDBancasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem
                 item
-                sm={3}
+                sm={12}
                 display="flex"
                 justifyContent="center"
               >

@@ -36,7 +36,7 @@ const createSchema = z.object({
       required_error: "O nome é obrigatório.",
     })
     .min(1, { message: "O nome deve ser preenchido" }),
-  cod_edicao_revista: z
+  nr_isbn: z
     .string({
       required_error: "ISBN é obrigatório.",
     })
@@ -48,7 +48,7 @@ const createSchema = z.object({
 
 const updateSchema = z.object({
   nome_revista: z.string().optional(),
-  cod_edicao_revista: z.string().optional(),
+  nr_isbn: z.string().optional(),
   cod_editora: z.number().optional(),
 });
 
@@ -73,7 +73,7 @@ const CRUDRevistasInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/revistas/${id}`)
+        .get(`/revistas/revista/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -140,7 +140,7 @@ const CRUDRevistasInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/revistas/${id}`, data)
+          .put(`/revistas/revista/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Revista #${res.data.cod_revista} atualizada com sucesso`,
@@ -218,7 +218,7 @@ const CRUDRevistasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
                 <TextFieldElement
-                  name="cod_edicao_revista"
+                  name="nr_isbn"
                   placeholder="ISBN"
                   label="ISBN"
                   type="string"
@@ -240,7 +240,7 @@ const CRUDRevistasInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem
                 item
-                sm={3}
+                sm={12}
                 display="flex"
                 justifyContent="center"
               >
