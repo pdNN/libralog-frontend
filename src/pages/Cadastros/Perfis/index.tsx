@@ -31,14 +31,14 @@ const CRUDPerfis: FC = () => {
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;
-
+          console.log(data);
           tmpDat.dthr_atualizacao = format(
             new Date(tmpDat.dthr_atualizacao),
-            "dd/mm/yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
           );
           tmpDat.dthr_criacao = format(
             new Date(tmpDat.dthr_criacao),
-            "dd/mm/yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
           );
 
           tmpData.push(tmpDat);

@@ -33,11 +33,11 @@ const CRUDRevistas: FC = () => {
 
           tmpDat.dthr_atualizacao = format(
             new Date(tmpDat.dthr_atualizacao),
-            "dd/mm/yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
           );
           tmpDat.dthr_criacao = format(
             new Date(tmpDat.dthr_criacao),
-            "dd/mm/yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
           );
 
           tmpData.push(tmpDat);
@@ -60,7 +60,7 @@ const CRUDRevistas: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/revistas/${row_id}`)
+        .delete(`/revistas/revista/${row_id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Revista ${row_id} deletada com sucesso`);
           getData();

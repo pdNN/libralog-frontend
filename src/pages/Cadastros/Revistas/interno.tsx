@@ -128,7 +128,7 @@ const CRUDRevistasInterno: FC = () => {
             toast.success(
               `Revista #${res.data.cod_revista} criada com sucesso`,
             );
-            history.push(`/cadastros/${res.data.cod_revista}`);
+            history.push(`/cadastros/revistas/${res.data.cod_revista}`);
           })
           .catch((err: any) => {
             toast.error(

@@ -87,7 +87,7 @@ const CRUDUsuariosInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/usuarios/usuario/${id}`)
+        .get(`/usuarios/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -189,7 +189,7 @@ const CRUDUsuariosInterno: FC = () => {
             toast.success(
               `Usuário #${res.data.cod_usuario} criado com sucesso`,
             );
-            history.push(`/cadastros/${res.data.cod_usuario}`);
+            history.push(`/cadastros/usuarios/${res.data.cod_usuario}`);
           })
           .catch((err: any) => {
             toast.error(
