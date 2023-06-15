@@ -48,7 +48,6 @@ const Header: FC<IHeader> = ({ open, handleSidebarOpen }) => {
           <IconButton
             onClick={() => {
               signOut();
-              history.push("/login");
             }}
             sx={{ color: "#fff" }}
           >

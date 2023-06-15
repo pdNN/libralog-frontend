@@ -295,6 +295,24 @@ const CRUDPerfisInterno: FC = () => {
                         </StyledGridItem>
                       ),
                     )}
+                    {data?.permissoes.includes("super") && (
+                      <StyledGridItem item sm={12} lg={6}>
+                        <StyledCard>
+                          <StyledCardHeader title="super" />
+                          <StyledCardContent>
+                            <StyledGrid container spacing={2}>
+                              <StyledGridItem item sm={12} lg={6}>
+                                <SwitchElement
+                                  disabled
+                                  name="super"
+                                  label="super"
+                                />
+                              </StyledGridItem>
+                            </StyledGrid>
+                          </StyledCardContent>
+                        </StyledCard>
+                      </StyledGridItem>
+                    )}
                   </StyledGrid>
                 </StyledGridItem>
                 <StyledGridItem

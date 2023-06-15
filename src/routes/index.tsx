@@ -33,75 +33,100 @@ const Routes: React.FC = () => (
   <Switch>
     <Route path="/login" exact component={Login} />
 
-    <Route path="/" exact component={Inicio} isPrivate />
+    <Route path="/" exact component={Inicio} permissions={[]} />
 
-    <Route path="/cadastros/perfis" exact component={CRUDPerfis} isAdmin />
+    <Route
+      path="/cadastros/perfis"
+      exact
+      component={CRUDPerfis}
+      permissions={[]}
+    />
     <Route
       path="/cadastros/perfis/:id"
       exact
       component={CRUDPerfisInterno}
-      isAdmin
+      permissions={[]}
     />
 
     <Route
       path="/cadastros/distribuidoras"
       exact
       component={CRUDDistribuidoras}
-      isAdmin
+      permissions={[]}
     />
     <Route
       path="/cadastros/distribuidoras/:id"
       exact
       component={CRUDDistribuidorasInterno}
-      isAdmin
+      permissions={[]}
     />
 
-    <Route path="/cadastros/usuarios" exact component={CRUDUsuarios} isAdmin />
+    <Route
+      path="/cadastros/usuarios"
+      exact
+      component={CRUDUsuarios}
+      permissions={[]}
+    />
     <Route
       path="/cadastros/usuarios/:id"
       exact
       component={CRUDUsuariosInterno}
-      isAdmin
+      permissions={[]}
     />
 
-    <Route path="/cadastros/bancas" exact component={CRUDBancas} isAdmin />
+    <Route
+      path="/cadastros/bancas"
+      exact
+      component={CRUDBancas}
+      permissions={[]}
+    />
     <Route
       path="/cadastros/bancas/:id"
       exact
       component={CRUDBancasInterno}
-      isAdmin
+      permissions={[]}
     />
 
     <Route
       path="/cadastros/entregadores"
       exact
       component={CRUDEntregadores}
-      isAdmin
+      permissions={[]}
     />
     <Route
       path="/cadastros/entregadores/:id"
       exact
       component={CRUDEntregadoresInterno}
-      isAdmin
+      permissions={[]}
     />
 
-    <Route path="/cadastros/editoras" exact component={CRUDEditoras} isAdmin />
+    <Route
+      path="/cadastros/editoras"
+      exact
+      component={CRUDEditoras}
+      permissions={[]}
+    />
     <Route
       path="/cadastros/editoras/:id"
       exact
       component={CRUDEditorasInterno}
-      isAdmin
+      permissions={[]}
     />
 
-    <Route path="/cadastros/revistas" exact component={CRUDRevistas} isAdmin />
+    <Route
+      path="/cadastros/revistas"
+      exact
+      component={CRUDRevistas}
+      permissions={[]}
+    />
     <Route
       path="/cadastros/revistas/:id"
       exact
       component={CRUDRevistasInterno}
-      isAdmin
+      permissions={[]}
     />
 
-    <Route component={Pag404} isPrivate />
+    <Route component={Pag404} />
   </Switch>
 );
 

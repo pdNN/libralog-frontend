@@ -73,6 +73,7 @@ const CRUDUsuariosInterno: FC = () => {
 
   const [data, setData] = useState();
   const [distribuidoras, setDistribuidoras] = useState<ISelect[]>([]);
+  const [perfis, setPerfis] = useState<ISelect[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
@@ -87,7 +88,7 @@ const CRUDUsuariosInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/usuarios/${id}`)
+        .get(`/usuarios/usuario/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -136,12 +137,12 @@ const CRUDUsuariosInterno: FC = () => {
     await api
       .get(`/perfis/`)
       .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_distribuidora,
-          label: dat.nome_distribuidora,
+        const perfis = res.data.map((dat: any) => ({
+          id: dat.cod_perfil,
+          label: dat.nome_perfil,
         }));
 
-        setDistribuidoras(dists);
+        setPerfis(perfis);
       })
       .catch((err: any) => {
         toast.error(
@@ -231,6 +232,10 @@ const CRUDUsuariosInterno: FC = () => {
     getDistribuidoras();
   }, [getDistribuidoras]);
 
+  useEffect(() => {
+    getPerfis();
+  }, [getPerfis]);
+
   return (
     <StyledDefaultBox>
       {loading ? (
@@ -303,16 +308,7 @@ const CRUDUsuariosInterno: FC = () => {
                   label="Perfil do usuário"
                   matchId
                   name="cod_perfil"
-                  options={[
-                    {
-                      id: 1,
-                      label: "Inicial",
-                    },
-                    {
-                      id: 2,
-                      label: "Super",
-                    },
-                  ]}
+                  options={perfis}
                   textFieldProps={{
                     variant: "filled",
                   }}

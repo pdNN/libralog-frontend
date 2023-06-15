@@ -222,7 +222,7 @@ const CRUDEntregadoresInterno: FC = () => {
         <>
           <StyledStack>
             <Typography sx={{ width: "100%" }} component="h2">
-              {id === "novo" ? "Novo Entregador" : `entregador #${id}`}
+              {id === "novo" ? "Novo Entregador" : `Entregador #${id}`}
             </Typography>
           </StyledStack>
           <FormContainer

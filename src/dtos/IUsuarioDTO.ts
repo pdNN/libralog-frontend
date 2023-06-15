@@ -26,6 +26,6 @@ export type IUsuarioDTO = {
   dthr_atualizacao: Date;
   distribuidora?: IDistribuidoraDTO;
   cod_distribuidora: number;
-  perfil?: IPerfilDTO;
+  perfil: IPerfilDTO;
   cod_perfil: number;
 };
