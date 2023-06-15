@@ -14,24 +14,24 @@ import { StyledButton, StyledStack } from "../styles";
 
 import Listagem, { ICells } from "components/Listagem";
 import ListRow from "components/Listagem/ListRow";
-import { IDistribuidoraDTO } from "dtos/IDistribuidoraDTO";
+import { IPerfilDTO } from "dtos/IPerfisDTO";
 
-const CRUDDistribuidoras: FC = () => {
+const CRUDPerfis: FC = () => {
   const history = useHistory();
 
-  const [data, setData] = useState<IDistribuidoraDTO[]>([]);
+  const [data, setData] = useState<IPerfilDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
     setLoading(true);
     await api
-      .get("/distribuidoras")
+      .get("/perfis")
       .then(async (res: AxiosResponse) => {
-        const tmpData: IDistribuidoraDTO[] = [];
+        const tmpData: IPerfilDTO[] = [];
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;
-
+          console.log(data);
           tmpDat.dthr_atualizacao = format(
             new Date(tmpDat.dthr_atualizacao),
             "dd/MM/yyyy HH:mm:ss",
@@ -61,9 +61,9 @@ const CRUDDistribuidoras: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/distribuidoras/distribuidora/${row_id}`)
+        .delete(`/perfis/perfil/${row_id}`)
         .then(async (res: AxiosResponse) => {
-          toast.success(`Distribuidora ${row_id} deletada com sucesso`);
+          toast.success(`Perfil ${row_id} deletada com sucesso`);
           getData();
         })
         .catch((err: any) => {
@@ -85,16 +85,12 @@ const CRUDDistribuidoras: FC = () => {
 
   const cells: ICells[] = [
     {
-      id: "cod_distribuidora",
+      id: "cod_perfil",
       label: "Código",
     },
     {
-      id: "nome_distribuidora",
+      id: "nome_perfil",
       label: "Nome",
-    },
-    {
-      id: "qtd_licencas",
-      label: "Licenças",
     },
     {
       id: "dthr_atualizacao",
@@ -110,12 +106,12 @@ const CRUDDistribuidoras: FC = () => {
     <StyledDefaultBox>
       <StyledStack>
         <Typography sx={{ width: "100%" }} component="h2">
-          Distribuidoras
+          Perfis
         </Typography>
         <StyledButton
           onClick={(e) => {
             e.preventDefault();
-            history.push("/cadastros/distribuidoras/novo");
+            history.push("/cadastros/perfis/novo");
           }}
           variant="contained"
         >
@@ -126,8 +122,8 @@ const CRUDDistribuidoras: FC = () => {
       <Listagem data={data} loading={loading} cells={cells}>
         <ListRow
           cells={cells}
-          cod_id="cod_distribuidora"
-          link="/cadastros/distribuidoras"
+          cod_id="cod_perfil"
+          link="/cadastros/perfis"
           deleteFnc={deleteRow}
         />
       </Listagem>
@@ -135,4 +131,4 @@ const CRUDDistribuidoras: FC = () => {
   );
 };
 
-export default CRUDDistribuidoras;
+export default CRUDPerfis;

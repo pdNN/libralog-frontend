@@ -3,9 +3,12 @@ import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AutocompleteElement,
   FormContainer,
+  PasswordElement,
   TextFieldElement,
 } from "react-hook-form-mui";
 
@@ -22,10 +25,46 @@ import {
 } from "../styles";
 
 import loadingSrc from "assets/loading.svg";
+import { ISelect } from "dtos/IUtils";
 
 interface ParamsTypes {
   id: string | undefined;
 }
+
+const createSchema = z.object({
+  nome_usuario: z
+    .string({
+      required_error: "O nome é obrigatório.",
+    })
+    .min(1, { message: "O nome deve ser preenchido" }),
+  email_usuario: z
+    .string({
+      required_error: "O e-mail é obrigatório.",
+    })
+    .min(1, { message: "O e-mail deve ser preenchido." })
+    .email("E-mail inválido."),
+  cod_perfil: z
+    .number({
+      required_error: "O perfil é obrigatório.",
+    })
+    .min(0, { message: "O perfil deve ser preenchido." }),
+  des_senha: z
+    .string({
+      required_error: "Senha é obrigatória",
+    })
+    .min(1, { message: "Senha deve ser preenchida." }),
+  cod_distribuidora: z.number({
+    required_error: "Distribuidora é obrigatória",
+  }),
+});
+
+const updateSchema = z.object({
+  nome_usuario: z.string().optional(),
+  email_usuario: z.string().email("E-mail inválido.").optional(),
+  cod_perfil: z.number().optional(),
+  des_senha: z.string().optional(),
+  cod_distribuidora: z.number().optional(),
+});
 
 const CRUDUsuariosInterno: FC = () => {
   const { id } = useParams<ParamsTypes>();
@@ -33,11 +72,13 @@ const CRUDUsuariosInterno: FC = () => {
   const history = useHistory();
 
   const [data, setData] = useState();
-  const [distribuidoras, setDistribuidoras] = useState<any[]>([]);
+  const [distribuidoras, setDistribuidoras] = useState<ISelect[]>([]);
+  const [perfis, setPerfis] = useState<ISelect[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const formContext = useForm({
     defaultValues: data,
+    resolver: zodResolver(id === "novo" ? createSchema : updateSchema),
   });
 
   const { reset } = formContext;
@@ -47,7 +88,7 @@ const CRUDUsuariosInterno: FC = () => {
       setLoading(true);
 
       await api
-        .get(`/usuarios/${id}`)
+        .get(`/usuarios/usuario/${id}`)
         .then(async (res: AxiosResponse) => {
           reset(res.data);
           setData(res.data);
@@ -76,9 +117,32 @@ const CRUDUsuariosInterno: FC = () => {
           label: dat.nome_distribuidora,
         }));
 
-        console.log(dists);
-
         setDistribuidoras(dists);
+      })
+      .catch((err: any) => {
+        toast.error(
+          err.response?.data.message
+            ? err.response?.data.message
+            : "Ocorreu um erro",
+        );
+        console.error(`Erro: ${err.response?.data.message}`);
+      });
+
+    setLoading(false);
+  }, []);
+
+  const getPerfis = useCallback(async () => {
+    setLoading(true);
+
+    await api
+      .get(`/perfis/`)
+      .then(async (res: AxiosResponse) => {
+        const perfis = res.data.map((dat: any) => ({
+          id: dat.cod_perfil,
+          label: dat.nome_perfil,
+        }));
+
+        setPerfis(perfis);
       })
       .catch((err: any) => {
         toast.error(
@@ -97,7 +161,7 @@ const CRUDUsuariosInterno: FC = () => {
       setLoading(true);
 
       await api
-        .delete(`/usuarios/${id}`)
+        .delete(`/usuarios/usuario/${id}`)
         .then(async (res: AxiosResponse) => {
           toast.success(`Usuário ${id} deletado com sucesso`);
           history.push("/cadastros/usuarios");
@@ -138,7 +202,7 @@ const CRUDUsuariosInterno: FC = () => {
           });
       } else {
         await api
-          .put(`/usuarios/${id}`, data)
+          .put(`/usuarios/usuario/${id}`, data)
           .then(async (res: AxiosResponse) => {
             toast.success(
               `Usuário #${res.data.cod_usuario} atualizado com sucesso`,
@@ -167,6 +231,10 @@ const CRUDUsuariosInterno: FC = () => {
   useEffect(() => {
     getDistribuidoras();
   }, [getDistribuidoras]);
+
+  useEffect(() => {
+    getPerfis();
+  }, [getPerfis]);
 
   return (
     <StyledDefaultBox>
@@ -211,7 +279,6 @@ const CRUDUsuariosInterno: FC = () => {
                   label="Nome"
                   variant="filled"
                   fullWidth
-                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -222,39 +289,29 @@ const CRUDUsuariosInterno: FC = () => {
                   type="email"
                   variant="filled"
                   fullWidth
-                  required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
-                <TextFieldElement
-                  name="des_senha"
-                  placeholder="Senha do usuário"
-                  label="Senha"
-                  type="password"
-                  variant="filled"
-                  fullWidth
-                  required
-                />
-              </StyledGridItem>
+              {id === "novo" && (
+                <StyledGridItem item sm={12} lg={6}>
+                  <PasswordElement
+                    name="des_senha"
+                    placeholder="Senha do usuário"
+                    label="Senha"
+                    type="password"
+                    variant="filled"
+                    fullWidth
+                  />
+                </StyledGridItem>
+              )}
               <StyledGridItem item sm={12} lg={6}>
                 <AutocompleteElement
                   label="Perfil do usuário"
                   matchId
                   name="cod_perfil"
-                  options={[
-                    {
-                      id: 0,
-                      label: "Inicial",
-                    },
-                    {
-                      id: 1,
-                      label: "Admin",
-                    },
-                  ]}
+                  options={perfis}
                   textFieldProps={{
                     variant: "filled",
                   }}
-                  required
                 />
               </StyledGridItem>
               <StyledGridItem item sm={12} lg={6}>
@@ -266,7 +323,6 @@ const CRUDUsuariosInterno: FC = () => {
                   textFieldProps={{
                     variant: "filled",
                   }}
-                  required
                 />
               </StyledGridItem>
               <StyledGridItem

@@ -14,20 +14,20 @@ import { StyledButton, StyledStack } from "../styles";
 
 import Listagem, { ICells } from "components/Listagem";
 import ListRow from "components/Listagem/ListRow";
-import { IDistribuidoraDTO } from "dtos/IDistribuidoraDTO";
+import { IEntregadorDTO } from "dtos/IEntregadorDTO";
 
-const CRUDDistribuidoras: FC = () => {
+const CRUDEntregadores: FC = () => {
   const history = useHistory();
 
-  const [data, setData] = useState<IDistribuidoraDTO[]>([]);
+  const [data, setData] = useState<IEntregadorDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
     setLoading(true);
     await api
-      .get("/distribuidoras")
+      .get("/entregadores")
       .then(async (res: AxiosResponse) => {
-        const tmpData: IDistribuidoraDTO[] = [];
+        const tmpData: IEntregadorDTO[] = [];
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;
@@ -61,9 +61,9 @@ const CRUDDistribuidoras: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/distribuidoras/distribuidora/${row_id}`)
+        .delete(`/entregadores/entregador/${row_id}`)
         .then(async (res: AxiosResponse) => {
-          toast.success(`Distribuidora ${row_id} deletada com sucesso`);
+          toast.success(`Entregador ${row_id} deletado com sucesso`);
           getData();
         })
         .catch((err: any) => {
@@ -85,24 +85,28 @@ const CRUDDistribuidoras: FC = () => {
 
   const cells: ICells[] = [
     {
-      id: "cod_distribuidora",
+      id: "cod_entregador",
       label: "Código",
     },
     {
-      id: "nome_distribuidora",
+      id: "nome_entregador",
       label: "Nome",
     },
     {
-      id: "qtd_licencas",
-      label: "Licenças",
+      id: "nr_telefone",
+      label: "Telefone",
     },
     {
-      id: "dthr_atualizacao",
-      label: "Dt. Atualização",
+      id: "cod_cpf",
+      label: "CPF",
     },
     {
-      id: "dthr_criacao",
-      label: "Dt. Criação",
+      id: "cod_cnh",
+      label: "CNH",
+    },
+    {
+      id: "des_email",
+      label: "E-mail",
     },
   ];
 
@@ -110,12 +114,12 @@ const CRUDDistribuidoras: FC = () => {
     <StyledDefaultBox>
       <StyledStack>
         <Typography sx={{ width: "100%" }} component="h2">
-          Distribuidoras
+          Entregadores
         </Typography>
         <StyledButton
           onClick={(e) => {
             e.preventDefault();
-            history.push("/cadastros/distribuidoras/novo");
+            history.push("/cadastros/entregadores/novo");
           }}
           variant="contained"
         >
@@ -126,8 +130,8 @@ const CRUDDistribuidoras: FC = () => {
       <Listagem data={data} loading={loading} cells={cells}>
         <ListRow
           cells={cells}
-          cod_id="cod_distribuidora"
-          link="/cadastros/distribuidoras"
+          cod_id="cod_entregador"
+          link="/cadastros/entregadores"
           deleteFnc={deleteRow}
         />
       </Listagem>
@@ -135,4 +139,4 @@ const CRUDDistribuidoras: FC = () => {
   );
 };
 
-export default CRUDDistribuidoras;
+export default CRUDEntregadores;

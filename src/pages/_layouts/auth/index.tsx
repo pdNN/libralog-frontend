@@ -9,6 +9,11 @@ import {
   ContentPaste as ContentPasteIcon,
   Home as HomeIcon,
   PeopleAltRounded as PeopleAltRoundedIcon,
+  Storefront as StorefrontIcon,
+  LocalShipping as LocalShippingIcon,
+  LibraryBooks as LibraryBooksIcon,
+  MenuBook as MenuBookIcon,
+  AssignmentInd as AssignmentIndIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -16,7 +21,7 @@ interface IAuthLayout {
 }
 
 const AuthLayout: FC<IAuthLayout> = ({ children }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
 
   const sidebarItens: IItems[] = [
     {
@@ -24,28 +29,54 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
       label: "Início",
       link: "/",
       icon: <HomeIcon />,
-      profile: 0,
     },
     {
       id: "cadastros",
       label: "Cadastros",
       link: "/cadastros",
       icon: <ContentPasteIcon />,
-      profile: 1,
       nested: [
+        {
+          id: "perfis",
+          label: "Perfis",
+          link: "/cadastros/perfis",
+          icon: <AssignmentIndIcon />,
+        },
         {
           id: "distribuidoras",
           label: "Distribuidoras",
           link: "/cadastros/distribuidoras",
           icon: <BusinessIcon />,
-          profile: 1,
         },
         {
           id: "usuarios",
           label: "Usuarios",
           link: "/cadastros/usuarios",
           icon: <PeopleAltRoundedIcon />,
-          profile: 1,
+        },
+        {
+          id: "bancas",
+          label: "Bancas",
+          link: "/cadastros/bancas",
+          icon: <StorefrontIcon />,
+        },
+        {
+          id: "entregadores",
+          label: "Entregadores",
+          link: "/cadastros/entregadores",
+          icon: <LocalShippingIcon />,
+        },
+        {
+          id: "editoras",
+          label: "Editoras",
+          link: "/cadastros/editoras",
+          icon: <LibraryBooksIcon />,
+        },
+        {
+          id: "revistas",
+          label: "Revistas",
+          link: "/cadastros/revistas",
+          icon: <MenuBookIcon />,
         },
       ],
     },

@@ -14,20 +14,19 @@ import { StyledButton, StyledStack } from "../styles";
 
 import Listagem, { ICells } from "components/Listagem";
 import ListRow from "components/Listagem/ListRow";
-import { IDistribuidoraDTO } from "dtos/IDistribuidoraDTO";
 
-const CRUDDistribuidoras: FC = () => {
+const CRUDRevistas: FC = () => {
   const history = useHistory();
 
-  const [data, setData] = useState<IDistribuidoraDTO[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
     setLoading(true);
     await api
-      .get("/distribuidoras")
+      .get("/revistas")
       .then(async (res: AxiosResponse) => {
-        const tmpData: IDistribuidoraDTO[] = [];
+        const tmpData: any[] = [];
 
         res.data.forEach((dat: any) => {
           const tmpDat = dat;
@@ -61,9 +60,9 @@ const CRUDDistribuidoras: FC = () => {
     async (row_id: number) => {
       setLoading(true);
       await api
-        .delete(`/distribuidoras/distribuidora/${row_id}`)
+        .delete(`/revistas/revista/${row_id}`)
         .then(async (res: AxiosResponse) => {
-          toast.success(`Distribuidora ${row_id} deletada com sucesso`);
+          toast.success(`Revista ${row_id} deletada com sucesso`);
           getData();
         })
         .catch((err: any) => {
@@ -85,24 +84,20 @@ const CRUDDistribuidoras: FC = () => {
 
   const cells: ICells[] = [
     {
-      id: "cod_distribuidora",
+      id: "cod_revista",
       label: "Código",
     },
     {
-      id: "nome_distribuidora",
+      id: "nome_revista",
       label: "Nome",
     },
     {
-      id: "qtd_licencas",
-      label: "Licenças",
+      id: "nr_isbn",
+      label: "ISBN",
     },
     {
-      id: "dthr_atualizacao",
-      label: "Dt. Atualização",
-    },
-    {
-      id: "dthr_criacao",
-      label: "Dt. Criação",
+      id: "editora.nome_editora",
+      label: "Editora",
     },
   ];
 
@@ -110,12 +105,12 @@ const CRUDDistribuidoras: FC = () => {
     <StyledDefaultBox>
       <StyledStack>
         <Typography sx={{ width: "100%" }} component="h2">
-          Distribuidoras
+          Revistas
         </Typography>
         <StyledButton
           onClick={(e) => {
             e.preventDefault();
-            history.push("/cadastros/distribuidoras/novo");
+            history.push("/cadastros/revistas/novo");
           }}
           variant="contained"
         >
@@ -126,8 +121,8 @@ const CRUDDistribuidoras: FC = () => {
       <Listagem data={data} loading={loading} cells={cells}>
         <ListRow
           cells={cells}
-          cod_id="cod_distribuidora"
-          link="/cadastros/distribuidoras"
+          cod_id="cod_revista"
+          link="/cadastros/revistas"
           deleteFnc={deleteRow}
         />
       </Listagem>
@@ -135,4 +130,4 @@ const CRUDDistribuidoras: FC = () => {
   );
 };
 
-export default CRUDDistribuidoras;
+export default CRUDRevistas;

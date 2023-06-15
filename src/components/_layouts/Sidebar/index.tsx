@@ -9,14 +9,12 @@ import {
 } from "@mui/icons-material";
 import { sidebarWidth } from "styles/theme";
 import ListItem from "./ListItem";
-import { useAuth } from "hooks/auth";
 
 export interface IItems {
   id: string;
   label: string;
   link: string;
   icon: ReactNode;
-  profile: number;
   nested?: IItems[];
 }
 
@@ -28,7 +26,6 @@ interface ISidebar {
 
 const Sidebar: FC<ISidebar> = ({ open, items, handleSidebarClose }) => {
   const theme = useTheme();
-  const { usuario } = useAuth();
 
   return (
     <Drawer
@@ -55,12 +52,9 @@ const Sidebar: FC<ISidebar> = ({ open, items, handleSidebarClose }) => {
       </StyledDrawerHeader>
       <Divider />
       <List>
-        {items.map(
-          (item, index) =>
-            (item.profile === 0 || item.profile === usuario.cod_perfil) && (
-              <ListItem key={item.id} item={item} />
-            ),
-        )}
+        {items.map((item, index) => {
+          return <ListItem key={item.id} item={item} />;
+        })}
       </List>
     </Drawer>
   );

@@ -11,80 +11,73 @@ import DefaultLayout from "pages/_layouts/default";
 import { useAuth } from "../hooks/auth";
 
 interface RouteProps extends ReactDOMRouteProps {
-  isPrivate?: boolean;
-  isAdmin?: boolean;
+  permissions?: string[];
   component: any;
 }
 
 const Route: FC<RouteProps> = ({
-  isPrivate = false,
-  isAdmin = false,
+  permissions = [],
   component: Component,
   ...rest
 }) => {
   const auth = useAuth();
   const { usuario } = auth;
-  // const [redirect, setRedirect] = useState<number>(0);
-  // const [profile, setProfile] = useState<number | null>(null);
+  const [redirect, setRedirect] = useState<number>(0);
 
-  // const handleProfile = useCallback(() => {
-  //   if (usuario) {
-  //     setProfile(usuario.cod_perfil);
-  //   }
-  // }, [usuario]);
+  const handleRedirect = useCallback(() => {
+    // 1 - login / 2 - inicio / 0 - normal;
+    if (usuario && !permissions) {
+      console.log(1);
+      setRedirect(2);
+    } else if (!usuario && !permissions) {
+      console.log(2);
+      setRedirect(1);
+    } else if (usuario && permissions && permissions.length > 0) {
+      console.log(3);
+      const hasPermission = permissions.some((permission) => {
+        return (
+          usuario.perfil.permissoes.includes(permission) ||
+          usuario.perfil.permissoes.includes("super")
+        );
+      });
 
-  // const handleRedirect = useCallback(() => {
-  //   let inicial = false;
-  //   let admin = false;
-  //   if (profile) {
-  //     switch (profile) {
-  //       case 1:
-  //         admin = true;
-  //         break;
-  //       default:
-  //         inicial = true;
-  //         break;
-  //     }
-  //   }
+      if (!hasPermission) {
+        setRedirect(2);
+      }
+    } else {
+      console.log(4);
+      setRedirect(0);
+    }
+  }, [permissions, usuario]);
 
-  //   // 1 - login / 2 - inicio / 0 - normal;
-  //   if (redirect === 0) {
-  //     if ((!usuario && isPrivate) || (!usuario && isAdmin)) {
-  //       setRedirect(1);
-  //     } else if (!admin && isAdmin) {
-  //       setRedirect(1);
-  //     } else if (usuario && !isPrivate && !isAdmin) {
-  //       setRedirect(2);
-  //     }
-  //   }
-  // }, [redirect, isAdmin, isPrivate, profile, usuario]);
-
-  // useEffect(() => {
-  //   handleProfile();
-  // }, [handleProfile]);
-
-  // useEffect(() => {
-  //   handleRedirect();
-  // }, [handleRedirect]);
+  useEffect(() => {
+    handleRedirect();
+  }, [handleRedirect]);
 
   return (
     <ReactDOMRoute
       {...rest}
       render={({ location }) => {
-        // switch (redirect) {
-        //   case 1:
-        //     return (
-        //       <Redirect
-        //         to={{ pathname: "/login", state: { from: location } }}
-        //       />
-        //     );
-        //   case 2:
-        //     return (
-        //       <Redirect to={{ pathname: "/", state: { from: location } }} />
-        //     );
-        //   default:
-        //     break;
-        // }
+        switch (redirect) {
+          case 1:
+            return (
+              <Redirect
+                to={{ pathname: "/login", state: { from: location } }}
+              />
+            );
+          case 2:
+            return (
+              <Redirect to={{ pathname: "/", state: { from: location } }} />
+            );
+          default:
+            break;
+        }
+
+        if (!usuario && location.pathname !== "/login") {
+          return (
+            <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          );
+        }
 
         const Layout = usuario ? AuthLayout : DefaultLayout;
 

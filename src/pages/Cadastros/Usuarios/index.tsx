@@ -33,11 +33,11 @@ const CRUDUsuarios: FC = () => {
 
           tmpDat.dthr_atualizacao = format(
             new Date(tmpDat.dthr_atualizacao),
-            "dd/mm/yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
           );
           tmpDat.dthr_criacao = format(
             new Date(tmpDat.dthr_criacao),
-            "dd/mm/yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
           );
 
           tmpData.push(tmpDat);
@@ -96,7 +96,7 @@ const CRUDUsuarios: FC = () => {
       label: "E-mail",
     },
     {
-      id: "des_perfil",
+      id: "perfil.nome_perfil",
       label: "Perfil",
     },
     {
@@ -108,7 +108,7 @@ const CRUDUsuarios: FC = () => {
       label: "Dt. Criação",
     },
     {
-      id: "cod_distribuidora",
+      id: "distribuidora.nome_distribuidora",
       label: "Distribuidora",
     },
   ];

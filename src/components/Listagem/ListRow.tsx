@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { FC } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -6,11 +7,12 @@ import { Stack, IconButton } from "@mui/material";
 import {
   EditRounded as EditRoundedIcon,
   DeleteForeverRounded as DeleteForeverRoundedIcon,
+  Pageview as PageviewIcon,
 } from "@mui/icons-material";
 
 import { StyledTableCell, StyledTableRow } from "components/Listagem/styles";
 import { ICells } from "components/Listagem";
-import { format, parse } from "date-fns";
+import DeleteDialog from "components/DeleteDialog";
 
 interface IRow {
   cells: ICells[];
@@ -59,17 +61,20 @@ const ListRow: FC<IRow> = (props) => {
               history.push(`${link}/${row_id}`);
             }}
           >
+            <PageviewIcon />
+          </IconButton>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              history.push(`${link}/${row_id}`);
+            }}
+          >
             <EditRoundedIcon />
           </IconButton>
           {deleteFnc && (
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteFnc(row_id);
-              }}
-            >
+            <DeleteDialog deleteFnc={deleteFnc} row_id={row_id}>
               <DeleteForeverRoundedIcon />
-            </IconButton>
+            </DeleteDialog>
           )}
         </Stack>
       </StyledTableCell>
