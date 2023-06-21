@@ -389,7 +389,7 @@ const CRUDDocFicalInterno: FC = () => {
           <StyledStack>
             <Typography sx={{ width: "100%" }} component="h2">
               {id === "novo"
-                ? "Nova Documento Fiscal"
+                ? "Novo Documento Fiscal"
                 : `Documento Fiscal #${id}`}
             </Typography>
           </StyledStack>
@@ -498,7 +498,20 @@ const CRUDDocFicalInterno: FC = () => {
                   label="Movimento"
                   matchId
                   name="cod_Movimento"
-                  options={movimento}
+                  options={[
+                    {
+                      id: 0,
+                      label: "Entrada",
+                    },
+                    {
+                      id: 1,
+                      label: "Saída",
+                    },
+                    {
+                      id: 1,
+                      label: "Devolução",
+                    },
+                  ]}
                   textFieldProps={{
                     variant: "filled",
                   }}
