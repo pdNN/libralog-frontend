@@ -22,66 +22,66 @@ const CRUDDocFiscal: FC = () => {
   const [data, setData] = useState<IFiscalDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getData = useCallback(async () => {
-    setLoading(true);
-    await api
-      .get("/fiscal")
-      .then(async (res: AxiosResponse) => {
-        const tmpData: IFiscalDTO[] = [];
+  // const getData = useCallback(async () => {
+  //   setLoading(true);
+  //   await api
+  //     .get("/fiscal")
+  //     .then(async (res: AxiosResponse) => {
+  //       const tmpData: IFiscalDTO[] = [];
 
-        res.data.forEach((dat: any) => {
-          const tmpDat = dat;
+  //       res.data.forEach((dat: any) => {
+  //         const tmpDat = dat;
 
-          tmpDat.dthr_atualizacao = format(
-            new Date(tmpDat.dthr_atualizacao),
-            "dd/MM/yyyy HH:mm:ss",
-          );
-          tmpDat.dthr_criacao = format(
-            new Date(tmpDat.dthr_criacao),
-            "dd/MM/yyyy HH:mm:ss",
-          );
+  //         tmpDat.dthr_atualizacao = format(
+  //           new Date(tmpDat.dthr_atualizacao),
+  //           "dd/MM/yyyy HH:mm:ss",
+  //         );
+  //         tmpDat.dthr_criacao = format(
+  //           new Date(tmpDat.dthr_criacao),
+  //           "dd/MM/yyyy HH:mm:ss",
+  //         );
 
-          tmpData.push(tmpDat);
-        });
+  //         tmpData.push(tmpDat);
+  //       });
 
-        setData(tmpData);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
-    setLoading(false);
-  }, []);
+  //       setData(tmpData);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
+  //   setLoading(false);
+  // }, []);
 
-  const deleteRow = useCallback(
-    async (row_id: number) => {
-      setLoading(true);
-      await api
-        .delete(`/fiscal/${row_id}`)
-        .then(async (res: AxiosResponse) => {
-          toast.success(`Documento ${row_id} deletado com sucesso`);
-          getData();
-        })
-        .catch((err: any) => {
-          toast.error(
-            err.response?.data.message
-              ? err.response?.data.message
-              : "Ocorreu um erro",
-          );
-          console.error(`Erro: ${err.response?.data.message}`);
-        });
-      setLoading(false);
-    },
-    [getData],
-  );
+  // const deleteRow = useCallback(
+  //   async (row_id: number) => {
+  //     setLoading(true);
+  //     await api
+  //       .delete(`/fiscal/${row_id}`)
+  //       .then(async (res: AxiosResponse) => {
+  //         toast.success(`Documento ${row_id} deletado com sucesso`);
+  //         getData();
+  //       })
+  //       .catch((err: any) => {
+  //         toast.error(
+  //           err.response?.data.message
+  //             ? err.response?.data.message
+  //             : "Ocorreu um erro",
+  //         );
+  //         console.error(`Erro: ${err.response?.data.message}`);
+  //       });
+  //     setLoading(false);
+  //   },
+  //   [getData],
+  // );
 
-  useEffect(() => {
-    getData();
-  }, [getData]);
+  // useEffect(() => {
+  //   getData();
+  // }, [getData]);
 
   const cells: ICells[] = [
     {
@@ -115,7 +115,7 @@ const CRUDDocFiscal: FC = () => {
         <StyledButton
           onClick={(e) => {
             e.preventDefault();
-            history.push("/Logistica/Fiscal");
+            history.push("/Logistica/Fiscal/novo");
           }}
           variant="contained"
         >
@@ -128,7 +128,7 @@ const CRUDDocFiscal: FC = () => {
           cells={cells}
           cod_id="cod_documento"
           link="/Logistica/Fiscal"
-          deleteFnc={deleteRow}
+          // deleteFnc={deleteRow}
         />
       </Listagem>
     </StyledDefaultBox>

@@ -13,7 +13,7 @@ import { z } from "zod";
 
 import { Stack, Typography } from "@mui/material";
 
-import api from "services/api";
+// import api from "services/api";
 
 import { StyledDefaultBox } from "styles/default";
 import {
@@ -122,251 +122,251 @@ const CRUDDocFicalInterno: FC = () => {
 
   const { reset } = formContext;
 
-  const getData = useCallback(async () => {
-    if (id !== "novo") {
-      setLoading(true);
+  // const getData = useCallback(async () => {
+  //   if (id !== "novo") {
+  //     setLoading(true);
 
-      await api
-        .get(`/fiscal/${id}`)
-        .then(async (res: AxiosResponse) => {
-          reset(res.data);
-          setData(res.data);
-        })
-        .catch((err: any) => {
-          toast.error(
-            err.response?.data.message
-              ? err.response?.data.message
-              : "Ocorreu um erro",
-          );
-          console.error(`Erro: ${err.response?.data.message}`);
-        });
+  //     await api
+  //       .get(`/fiscal/${id}`)
+  //       .then(async (res: AxiosResponse) => {
+  //         reset(res.data);
+  //         setData(res.data);
+  //       })
+  //       .catch((err: any) => {
+  //         toast.error(
+  //           err.response?.data.message
+  //             ? err.response?.data.message
+  //             : "Ocorreu um erro",
+  //         );
+  //         console.error(`Erro: ${err.response?.data.message}`);
+  //       });
 
-      setLoading(false);
-    }
-  }, [id, reset]);
+  //     setLoading(false);
+  //   }
+  // }, [id, reset]);
 
-  const getDistribuidoras = useCallback(async () => {
-    setLoading(true);
+  // const getDistribuidoras = useCallback(async () => {
+  //   setLoading(true);
 
-    await api
-      .get(`/distribuidoras`)
-      .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_distribuidora,
-          label: dat.nome_distribuidora,
-        }));
+  //   await api
+  //     .get(`/distribuidoras`)
+  //     .then(async (res: AxiosResponse) => {
+  //       const dists = res.data.map((dat: any) => ({
+  //         id: dat.cod_distribuidora,
+  //         label: dat.nome_distribuidora,
+  //       }));
 
-        setDistribuidoras(dists);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
+  //       setDistribuidoras(dists);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
 
-    setLoading(false);
-  }, []);
+  //   setLoading(false);
+  // }, []);
 
-  const getEntregadores = useCallback(async () => {
-    setLoading(true);
+  // const getEntregadores = useCallback(async () => {
+  //   setLoading(true);
 
-    await api
-      .get(`/entregadores`)
-      .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_entregador,
-          label: dat.nome_entregador,
-        }));
+  //   await api
+  //     .get(`/entregadores`)
+  //     .then(async (res: AxiosResponse) => {
+  //       const dists = res.data.map((dat: any) => ({
+  //         id: dat.cod_entregador,
+  //         label: dat.nome_entregador,
+  //       }));
 
-        setEntregadores(dists);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
+  //       setEntregadores(dists);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
 
-    setLoading(false);
-  }, []);
+  //   setLoading(false);
+  // }, []);
 
-  const getEditoras = useCallback(async () => {
-    setLoading(true);
+  // const getEditoras = useCallback(async () => {
+  //   setLoading(true);
 
-    await api
-      .get(`/editoras`)
-      .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_editora,
-          label: dat.nome_editora,
-        }));
+  //   await api
+  //     .get(`/editoras`)
+  //     .then(async (res: AxiosResponse) => {
+  //       const dists = res.data.map((dat: any) => ({
+  //         id: dat.cod_editora,
+  //         label: dat.nome_editora,
+  //       }));
 
-        setEditoras(dists);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
+  //       setEditoras(dists);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
 
-    setLoading(false);
-  }, []);
+  //   setLoading(false);
+  // }, []);
 
-  const getRevistas = useCallback(async () => {
-    setLoading(true);
+  // const getRevistas = useCallback(async () => {
+  //   setLoading(true);
 
-    await api
-      .get(`/revistas`)
-      .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_revista,
-          label: dat.nome_revista,
-        }));
+  //   await api
+  //     .get(`/revistas`)
+  //     .then(async (res: AxiosResponse) => {
+  //       const dists = res.data.map((dat: any) => ({
+  //         id: dat.cod_revista,
+  //         label: dat.nome_revista,
+  //       }));
 
-        setRevistas(dists);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
+  //       setRevistas(dists);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
 
-    setLoading(false);
-  }, []);
+  //   setLoading(false);
+  // }, []);
 
-  const getBancas = useCallback(async () => {
-    setLoading(true);
+  // const getBancas = useCallback(async () => {
+  //   setLoading(true);
 
-    await api
-      .get(`/bancas`)
-      .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_banca,
-          label: dat.nome_banca,
-        }));
+  //   await api
+  //     .get(`/bancas`)
+  //     .then(async (res: AxiosResponse) => {
+  //       const dists = res.data.map((dat: any) => ({
+  //         id: dat.cod_banca,
+  //         label: dat.nome_banca,
+  //       }));
 
-        setBancas(dists);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
+  //       setBancas(dists);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
 
-    setLoading(false);
-  }, []);
+  //   setLoading(false);
+  // }, []);
 
-  const getMovimento = useCallback(async () => {
-    setLoading(true);
+  // const getMovimento = useCallback(async () => {
+  //   setLoading(true);
 
-    await api
-      .get(`/movimento`)
-      .then(async (res: AxiosResponse) => {
-        const dists = res.data.map((dat: any) => ({
-          id: dat.cod_movimento,
-          label: dat.nome_movimento,
-        }));
+  //   await api
+  //     .get(`/movimento`)
+  //     .then(async (res: AxiosResponse) => {
+  //       const dists = res.data.map((dat: any) => ({
+  //         id: dat.cod_movimento,
+  //         label: dat.nome_movimento,
+  //       }));
 
-        setMovimento(dists);
-      })
-      .catch((err: any) => {
-        toast.error(
-          err.response?.data.message
-            ? err.response?.data.message
-            : "Ocorreu um erro",
-        );
-        console.error(`Erro: ${err.response?.data.message}`);
-      });
+  //       setMovimento(dists);
+  //     })
+  //     .catch((err: any) => {
+  //       toast.error(
+  //         err.response?.data.message
+  //           ? err.response?.data.message
+  //           : "Ocorreu um erro",
+  //       );
+  //       console.error(`Erro: ${err.response?.data.message}`);
+  //     });
 
-    setLoading(false);
-  }, []);
+  //   setLoading(false);
+  // }, []);
 
-  const handleSave = useCallback(
-    async (data: any) => {
-      setLoading(true);
+  // const handleSave = useCallback(
+  //   async (data: any) => {
+  //     setLoading(true);
 
-      if (id === "novo") {
-        await api
-          .post(`/fiscal`, data)
-          .then(async (res: AxiosResponse) => {
-            toast.success(
-              `Documento Fiscal #${res.data.cod_documento} criada com sucesso`,
-            );
-            history.push(`/logistica/fiscal/${res.data.cod_documento}`);
-          })
-          .catch((err: any) => {
-            toast.error(
-              err.response?.data.message
-                ? err.response?.data.message
-                : "Ocorreu um erro",
-            );
-            console.error(`Erro: ${err.response?.data.message}`);
-          });
-      } else {
-        await api
-          .put(`/fiscal/${id}`, data)
-          .then(async (res: AxiosResponse) => {
-            toast.success(
-              `Documento Fiscal #${res.data.cod_documento} atualizado com sucesso`,
-            );
-            getData();
-          })
-          .catch((err: any) => {
-            toast.error(
-              err.response?.data.message
-                ? err.response?.data.message
-                : "Ocorreu um erro",
-            );
-            console.error(`Erro: ${err.response?.data.message}`);
-          });
-      }
+  //     if (id === "novo") {
+  //       await api
+  //         .post(`/fiscal`, data)
+  //         .then(async (res: AxiosResponse) => {
+  //           toast.success(
+  //             `Documento Fiscal #${res.data.cod_documento} criada com sucesso`,
+  //           );
+  //           history.push(`/logistica/fiscal/${res.data.cod_documento}`);
+  //         })
+  //         .catch((err: any) => {
+  //           toast.error(
+  //             err.response?.data.message
+  //               ? err.response?.data.message
+  //               : "Ocorreu um erro",
+  //           );
+  //           console.error(`Erro: ${err.response?.data.message}`);
+  //         });
+  //     } else {
+  //       await api
+  //         .put(`/fiscal/${id}`, data)
+  //         .then(async (res: AxiosResponse) => {
+  //           toast.success(
+  //             `Documento Fiscal #${res.data.cod_documento} atualizado com sucesso`,
+  //           );
+  //           getData();
+  //         })
+  //         .catch((err: any) => {
+  //           toast.error(
+  //             err.response?.data.message
+  //               ? err.response?.data.message
+  //               : "Ocorreu um erro",
+  //           );
+  //           console.error(`Erro: ${err.response?.data.message}`);
+  //         });
+  //     }
 
-      setLoading(false);
-    },
-    [history, getData, id],
-  );
+  //     setLoading(false);
+  //   },
+  //   [history, getData, id],
+  // );
 
-  useEffect(() => {
-    getData();
-  }, [getData]);
+  // useEffect(() => {
+  //   getData();
+  // }, [getData]);
 
-  useEffect(() => {
-    getDistribuidoras();
-  }, [getDistribuidoras]);
+  // useEffect(() => {
+  //   getDistribuidoras();
+  // }, [getDistribuidoras]);
 
-  useEffect(() => {
-    getEntregadores();
-  }, [getEntregadores]);
+  // useEffect(() => {
+  //   getEntregadores();
+  // }, [getEntregadores]);
 
-  useEffect(() => {
-    getEditoras();
-  }, [getEditoras]);
+  // useEffect(() => {
+  //   getEditoras();
+  // }, [getEditoras]);
 
-  useEffect(() => {
-    getRevistas();
-  }, [getRevistas]);
+  // useEffect(() => {
+  //   getRevistas();
+  // }, [getRevistas]);
 
-  useEffect(() => {
-    getBancas();
-  }, [getBancas]);
+  // useEffect(() => {
+  //   getBancas();
+  // }, [getBancas]);
 
-  useEffect(() => {
-    getMovimento();
-  }, [getMovimento]);
+  // useEffect(() => {
+  //   getMovimento();
+  // }, [getMovimento]);
 
   return (
     <StyledDefaultBox>
@@ -395,7 +395,7 @@ const CRUDDocFicalInterno: FC = () => {
           </StyledStack>
           <FormContainer
             formContext={formContext}
-            onSuccess={handleSave}
+            // onSuccess={handleSave}
             FormProps={{
               style: {
                 width: "100%",
@@ -406,7 +406,7 @@ const CRUDDocFicalInterno: FC = () => {
             }}
           >
             <StyledGrid container spacing={2}>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
                   name="cod_n_nfe"
                   placeholder="Nfe"
@@ -416,7 +416,7 @@ const CRUDDocFicalInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
                   name="nr_quantidade"
                   placeholder="Quantidade"
@@ -427,7 +427,7 @@ const CRUDDocFicalInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={10}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
                   name="vlr_unitario"
                   placeholder="vlr unitario"
@@ -438,7 +438,7 @@ const CRUDDocFicalInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={2}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
                   name="vlr_total"
                   placeholder="vlr total"
@@ -449,7 +449,7 @@ const CRUDDocFicalInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={3}>
+              <StyledGridItem item sm={12} lg={4}>
                 <TextFieldElement
                   name="dthr_documento"
                   placeholder="Dt Doc"
@@ -460,7 +460,7 @@ const CRUDDocFicalInterno: FC = () => {
                   required
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
                   label="Distribuidora"
                   matchId
@@ -471,7 +471,7 @@ const CRUDDocFicalInterno: FC = () => {
                   }}
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
                   label="Editora"
                   matchId
@@ -482,7 +482,7 @@ const CRUDDocFicalInterno: FC = () => {
                   }}
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
                   label="Revista"
                   matchId
@@ -493,7 +493,7 @@ const CRUDDocFicalInterno: FC = () => {
                   }}
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
                   label="Movimento"
                   matchId
@@ -504,7 +504,7 @@ const CRUDDocFicalInterno: FC = () => {
                   }}
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
                   label="Banca"
                   matchId
@@ -515,7 +515,7 @@ const CRUDDocFicalInterno: FC = () => {
                   }}
                 />
               </StyledGridItem>
-              <StyledGridItem item sm={12} lg={6}>
+              <StyledGridItem item sm={12} lg={4}>
                 <AutocompleteElement
                   label="Entregador"
                   matchId
@@ -528,7 +528,7 @@ const CRUDDocFicalInterno: FC = () => {
               </StyledGridItem>
               <StyledGridItem
                 item
-                sm={12}
+                sm={4}
                 display="flex"
                 justifyContent="center"
               >
