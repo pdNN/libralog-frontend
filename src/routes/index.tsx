@@ -28,6 +28,8 @@ import CRUDEditorasInterno from "pages/Cadastros/Editoras/interno";
 
 import CRUDRevistas from "pages/Cadastros/Revistas";
 import CRUDRevistasInterno from "pages/Cadastros/Revistas/interno";
+import CRUDDocFicalInterno from "pages/Logistica/Fiscal/interno";
+import CRUDDocFiscal from "pages/Logistica/Fiscal";
 
 const Routes: React.FC = () => (
   <Switch>
@@ -123,6 +125,18 @@ const Routes: React.FC = () => (
       path="/cadastros/revistas/:id"
       exact
       component={CRUDRevistasInterno}
+      permissions={[]}
+    />
+    <Route
+      path="/logistica/fiscal"
+      exact
+      component={CRUDDocFiscal}
+      permissions={[]}
+    />
+    <Route
+      path="/logistica/fiscal/:id"
+      exact
+      component={CRUDDocFicalInterno}
       permissions={[]}
     />
 
