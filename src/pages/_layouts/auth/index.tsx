@@ -14,10 +14,8 @@ import {
   LibraryBooks as LibraryBooksIcon,
   MenuBook as MenuBookIcon,
   AssignmentInd as AssignmentIndIcon,
-  Engineering as EngineeringIcon,
-  ArrowForward as ArrowForwardIcon,
-  ArrowBack as ArrowBackIcon,
-  ArrowOutward as ArrowOutwardIcon,
+  DocumentScannerOutlined as DocumentScannerOutlinedIcon,
+  TopicOutlined as TopicOutlinedIcon,
 } from "@mui/icons-material";
 
 interface IAuthLayout {
@@ -88,13 +86,13 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
       id: "logistica",
       label: "Logística",
       link: "/logistica",
-      icon: <EngineeringIcon />,
+      icon: <TopicOutlinedIcon />,
       nested: [
         {
           id: "fiscal",
           label: "Fiscal",
           link: "/logistica/fiscal",
-          icon: <ArrowForwardIcon />,
+          icon: <DocumentScannerOutlinedIcon />,
         },
       ],
     },
